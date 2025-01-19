@@ -3,6 +3,10 @@
 #include "get_code/input_tree.h"
 #include "get_code/token.h"
 #include "tree_s__commands/free.h"
+#include "tree_s__commands/tree_commands.h"
+
+#include "math/operations.h"
+
 
 
 void print_tree(Node* node, VariableArr* all_var);
@@ -31,6 +35,12 @@ int main()
     printf("\n");
 
     dump(tree.root, &dumps_counter, &all_var);
+
+    solve(tree.root);
+    dump(tree.root, &dumps_counter, &all_var);
+    print_tree(tree.root, &all_var);
+    printf("\n");
+
 
 
 

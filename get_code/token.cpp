@@ -5,6 +5,7 @@
 #include <string.h>
 
 #include "../tree_s__commands/tree_commands.h"
+#include "../math/operations.h"
 
 
 const int NO_THIS_VAR = -1;

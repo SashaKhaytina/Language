@@ -1,1 +1,1 @@
-g++ main.cpp dump/for_dump.cpp tree_s__commands/tree_commands.cpp get_code/input_tree.cpp get_code/token.cpp tree_s__commands/free.cpp get_code/parser.cpp -o languge 
+g++ main.cpp dump/for_dump.cpp tree_s__commands/tree_commands.cpp get_code/input_tree.cpp get_code/token.cpp tree_s__commands/free.cpp get_code/parser.cpp math/calculate_formuls.cpp math/calculate_trivial.cpp -o languge 

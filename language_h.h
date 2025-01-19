@@ -36,8 +36,9 @@ enum AllOperations
     COS,
     POW,
     LN,
+    ASSIGM,
     OPEN_SKOB,
-    CLOSE_SKOB, 
+    CLOSE_SKOB
     // DOLL 
 };
 
@@ -77,31 +78,62 @@ struct Tree
 };
 
 
-struct Operation
-{
-    AllOperations num;
-    char          name[10];
-};
+// // struct Operation
+// // {
+// //     AllOperations num;
+// //     char          name[10];
+// // };
+
+// struct Operation
+// {
+//     AllOperations num;
+//     char          name[10];
+//     Elem_t        (*calculate)     (Node* node1, Node* node2); 
+//     void          (*triv_calculate)(Node* node, int* diference);
+// };
 
 
 
-const Operation op_arr[] = {
-                                {ADD,        "+"  },
-                                {SUB,        "-"  },
-                                {MUL,        "*"  },
-                                {DIV,        "/"  },
-                                {SIN,        "sin"},
-                                {COS,        "cos"},
-                                {POW,        "^"  },
-                                {LN ,        "ln" },
+// // const Operation op_arr[] = {
+// //                                 {ADD,        "+"  },
+// //                                 {SUB,        "-"  },
+// //                                 {MUL,        "*"  },
+// //                                 {DIV,        "/"  },
+// //                                 {SIN,        "sin"},
+// //                                 {COS,        "cos"},
+// //                                 {POW,        "^"  },
+// //                                 {LN ,        "ln" },
 
-                                {OPEN_SKOB,  "("  },
-                                {CLOSE_SKOB, ")"  }
+// //                                 {OPEN_SKOB,  "("  },
+// //                                 {CLOSE_SKOB, ")"  }, 
+// //                                 {ASSIGM,     "="  }
 
-                                // {DOLL,       "$",   NULL,     NULL,          NULL} 
-                            };
+// //                                 // {DOLL,       "$",   NULL,     NULL,          NULL} 
+// //                             };
 
-const int LEN_STRUCT_OP_ARR = (int) (sizeof(op_arr) / sizeof(Operation));
+// #include "math/calculate_formuls.h"
+// #include "math/calculate_trivial.h"
+
+// const Operation op_arr[] = {
+//                                 {ADD,        "+",   calculate_add, calculate_triv_add},
+//                                 {SUB,        "-",   calculate_sub, calculate_triv_sub},
+//                                 {MUL,        "*",   calculate_mul, calculate_triv_mul},
+//                                 {DIV,        "/",   calculate_div, calculate_triv_div},
+//                                 {SIN,        "sin", calculate_sin, calculate_triv_sin},
+//                                 {COS,        "cos", calculate_cos, calculate_triv_cos},
+//                                 {POW,        "^",   calculate_pow, calculate_triv_pow},
+//                                 {LN ,        "ln",  calculate_ln , calculate_triv_ln },
+
+//                                 {ASSIGM,     "=",   NULL,          NULL},
+
+//                                 {OPEN_SKOB,  "(",   NULL,          NULL},
+//                                 {CLOSE_SKOB, ")",   NULL,          NULL}
+
+//                                 // {DOLL,       "$",   NULL,     NULL,          NULL} 
+//                             };
+
+
+// const int LEN_STRUCT_OP_ARR = (int) (sizeof(op_arr) / sizeof(Operation));
 
 
 

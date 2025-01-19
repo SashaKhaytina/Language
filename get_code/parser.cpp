@@ -23,23 +23,54 @@ static Node* create_node_like_token(Token* token)
 // And everywhere (tokens->current_ind < tokens->size)?
 
 
-Node* GetGraph(Tokens* tokens, VariableArr* all_var)
+// Node* GetGraph(Tokens* tokens, VariableArr* all_var)
+// {
+//     assert(tokens);
+//     assert(all_var);
+
+
+//     Node* val = GetE_Addition(tokens, all_var);
+
+//     // bool operation = (tokens->array[tokens->current_ind]->type == OPERATION);
+//     // if ((tokens->array[tokens->current_ind]->type != OPERATION) || tokens->array[tokens->current_ind]->value.op_num != DOLL) // if node->type not DEFAULT
+//     // {
+//     //     printf("ERROR\n");
+//     // }
+
+//     return val;
+
+// }
+
+
+
+Node* GetAssigm(Tokens* tokens, VariableArr* all_var)
 {
     assert(tokens);
     assert(all_var);
 
+    Node* val_var = GetVariable(tokens, all_var);
+
+    if ((tokens->array[tokens->current_ind]->type != OPERATION) || (tokens->array[tokens->current_ind]->value.op_num != ASSIGM)) // в Func эта проверка написана по-другому. Кажется, там неправильно
+        printf("ERROR SYNTAX. Want '='\n");
+    
+    Node* op_tok = create_node_like_token(tokens->array[tokens->current_ind]);
+    tokens->current_ind++;
+
 
     Node* val = GetE_Addition(tokens, all_var);
 
-    // bool operation = (tokens->array[tokens->current_ind]->type == OPERATION);
-    // if ((tokens->array[tokens->current_ind]->type != OPERATION) || tokens->array[tokens->current_ind]->value.op_num != DOLL) // if node->type not DEFAULT
-    // {
-    //     printf("ERROR\n");
-    // }
+    op_tok->left = val_var;
+    op_tok->right = val;
+    // val = op_tok;
 
-    return val;
+    return op_tok;
 
 }
+
+
+
+
+
 
 
 Node* GetNumber(Tokens* tokens) 
