@@ -3,11 +3,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <string.h>
 
 #include "../tree_s__commands/tree_commands.h"
+#include "../math/operations.h"
 
 
 static Node* create_node_like_token(Token* token);
+static void  check_symb_error      (AllOperations op, Tokens* tokens);
 
 
 static Node* create_node_like_token(Token* token)
@@ -16,6 +19,23 @@ static Node* create_node_like_token(Token* token)
     if (token->type == VARIABLE)  return _VAR(token->value.var_num);
 
     return create_new_node_op(OPERATION, token->value.op_num, NULL, NULL);
+}
+
+
+static void check_symb_error(AllOperations op, Tokens* tokens)
+{
+    if ((tokens->current_ind >= tokens->size) || (tokens->array[tokens->current_ind]->type != OPERATION) || (tokens->array[tokens->current_ind]->value.op_num != op)) // в Func эта проверка написана по-другому. Кажется, там неправильно
+    {
+        printf("ERROR SYNTAX. Want '");
+        for (int i = 0; i < LEN_STRUCT_OP_ARR; i++)
+        {
+            if (op_arr[i].num == op)
+            {
+                printf("%s'\n", op_arr[i].name);
+                break; 
+            }
+        }
+    }
 }
 
 
@@ -40,6 +60,56 @@ static Node* create_node_like_token(Token* token)
 //     return val;
 
 // }
+
+Node* GetIf(Tokens* tokens, VariableArr* all_var)
+{
+    assert(tokens);
+    assert(all_var);
+
+    // if ((tokens->array[tokens->current_ind]->type != OPERATION) || (tokens->array[tokens->current_ind]->value.op_num != IF)) // в Func эта проверка написана по-другому. Кажется, там неправильно
+    //     printf("ERROR SYNTAX. Want 'if'\n");
+    check_symb_error(IF, tokens);
+    
+    Node* op_tok = create_node_like_token(tokens->array[tokens->current_ind]);
+    tokens->current_ind++;
+    
+
+    // if ((tokens->array[tokens->current_ind]->type != OPERATION) || (tokens->array[tokens->current_ind]->value.op_num != OPEN_SKOB)) // в Func эта проверка написана по-другому. Кажется, там неправильно
+    //     printf("ERROR SYNTAX. Want '('\n");
+    check_symb_error(OPEN_SKOB, tokens);
+    tokens->current_ind++;
+
+
+    Node* val_condition = GetE_Addition(tokens, all_var);
+
+
+    // if ((tokens->array[tokens->current_ind]->type != OPERATION) || (tokens->array[tokens->current_ind]->value.op_num != CLOSE_SKOB)) // в Func эта проверка написана по-другому. Кажется, там неправильно
+    //     printf("ERROR SYNTAX. Want ')'\n");
+    check_symb_error(CLOSE_SKOB, tokens);
+    tokens->current_ind++;
+
+
+    // if ((tokens->array[tokens->current_ind]->type != OPERATION) || (tokens->array[tokens->current_ind]->value.op_num != F_OPEN_SKOB)) // в Func эта проверка написана по-другому. Кажется, там неправильно
+    //     printf("ERROR SYNTAX. Want '{'\n");
+    check_symb_error(F_OPEN_SKOB, tokens);
+    tokens->current_ind++;
+
+    Node* val_to_do = GetAssigm(tokens, all_var);
+
+    // if ((tokens->current_ind >= tokens->size) || (tokens->array[tokens->current_ind]->type != OPERATION) || (tokens->array[tokens->current_ind]->value.op_num != F_CLOSE_SKOB)) // в Func эта проверка написана по-другому. Кажется, там неправильно
+    //     printf("ERROR SYNTAX. Want '}'\n");
+    check_symb_error(F_CLOSE_SKOB, tokens);
+    tokens->current_ind++;
+
+    
+    op_tok->left = val_condition;
+    op_tok->right = val_to_do;
+    // val = op_tok;
+
+    return op_tok;
+
+}
+
 
 
 

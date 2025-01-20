@@ -12,7 +12,7 @@
 struct Operation
 {
     AllOperations num;
-    char          name[10];
+    char          name[20];
     Elem_t        (*calculate)     (Node* node1, Node* node2); 
     void          (*triv_calculate)(Node* node, int* diference);
 };
@@ -40,19 +40,22 @@ struct Operation
 #include "calculate_trivial.h"
 
 const Operation op_arr[] = {
-                                {ADD,        "+",   calculate_add, calculate_triv_add},
-                                {SUB,        "-",   calculate_sub, calculate_triv_sub},
-                                {MUL,        "*",   calculate_mul, calculate_triv_mul},
-                                {DIV,        "/",   calculate_div, calculate_triv_div},
-                                {SIN,        "sin", calculate_sin, calculate_triv_sin},
-                                {COS,        "cos", calculate_cos, calculate_triv_cos},
-                                {POW,        "^",   calculate_pow, calculate_triv_pow},
-                                {LN ,        "ln",  calculate_ln , calculate_triv_ln },
+                                {ADD,          "+",   calculate_add, calculate_triv_add},
+                                {SUB,          "-",   calculate_sub, calculate_triv_sub},
+                                {MUL,          "*",   calculate_mul, calculate_triv_mul},
+                                {DIV,          "/",   calculate_div, calculate_triv_div},
+                                {SIN,          "sin", calculate_sin, calculate_triv_sin},
+                                {COS,          "cos", calculate_cos, calculate_triv_cos},
+                                {POW,          "^",   calculate_pow, calculate_triv_pow},
+                                {LN ,          "ln",  calculate_ln , calculate_triv_ln },
 
-                                {ASSIGM,     "=",   NULL,          NULL},
+                                {IF,           "if",  NULL,          NULL},
+                                {ASSIGM,       "=",   NULL,          NULL},
 
-                                {OPEN_SKOB,  "(",   NULL,          NULL},
-                                {CLOSE_SKOB, ")",   NULL,          NULL}
+                                {OPEN_SKOB,    "(",   NULL,          NULL},
+                                {CLOSE_SKOB,   ")",   NULL,          NULL},
+                                {F_OPEN_SKOB,  "{",   NULL,          NULL},
+                                {F_CLOSE_SKOB, "}",   NULL,          NULL}
 
                                 // {DOLL,       "$",   NULL,     NULL,          NULL} 
                             };

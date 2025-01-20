@@ -44,6 +44,7 @@ void get_tree(FILE* file, Tree* tree, VariableArr* all_var, Tokens* tokens)
     printf("\n");
 
     // tree->root = GetGraph(tokens, all_var);
-    tree->root = GetAssigm(tokens, all_var);
+    // tree->root = GetAssigm(tokens, all_var);
+    tree->root = GetIf(tokens, all_var);
     // free_needless_tokens(tokens);
 }

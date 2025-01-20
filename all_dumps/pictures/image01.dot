@@ -2,25 +2,37 @@ digraph
 {
 bgcolor="#F2EECB";
 rankdir = TB;
-POINT_0x5947b6ab6b00[shape=Mrecord, label = "POINT_0x5947b6ab6b00 | type - OPERATION(8) | =", style="filled",fillcolor="#D7CF8D"]
-POINT_0x5947b6ab6ad0[shape=Mrecord, label = "POINT_0x5947b6ab6ad0 | type - VARIABLE (2) | value - y (num - 1))", style="filled",fillcolor="#D7CF8D"]
-POINT_0x5947b6ab6c80[shape=Mrecord, label = "POINT_0x5947b6ab6c80 | type - OPERATION(0) | +", style="filled",fillcolor="#D7CF8D"]
-POINT_0x5947b6ab6b60[shape=Mrecord, label = "POINT_0x5947b6ab6b60 | type - OPERATION(0) | +", style="filled",fillcolor="#D7CF8D"]
-POINT_0x5947b6ab6b30[shape=Mrecord, label = "POINT_0x5947b6ab6b30 | type - NUMBER (1) | value - 1", style="filled",fillcolor="#D7CF8D"]
-POINT_0x5947b6ab6c20[shape=Mrecord, label = "POINT_0x5947b6ab6c20 | type - OPERATION(3) | /", style="filled",fillcolor="#D7CF8D"]
-POINT_0x5947b6ab6bc0[shape=Mrecord, label = "POINT_0x5947b6ab6bc0 | type - OPERATION(6) | ^", style="filled",fillcolor="#D7CF8D"]
-POINT_0x5947b6ab6b90[shape=Mrecord, label = "POINT_0x5947b6ab6b90 | type - NUMBER (1) | value - 2", style="filled",fillcolor="#D7CF8D"]
-POINT_0x5947b6ab6bf0[shape=Mrecord, label = "POINT_0x5947b6ab6bf0 | type - NUMBER (1) | value - 3", style="filled",fillcolor="#D7CF8D"]
-POINT_0x5947b6ab6c50[shape=Mrecord, label = "POINT_0x5947b6ab6c50 | type - NUMBER (1) | value - 8", style="filled",fillcolor="#D7CF8D"]
-POINT_0x5947b6ab6cb0[shape=Mrecord, label = "POINT_0x5947b6ab6cb0 | type - VARIABLE (2) | value - x (num - 2))", style="filled",fillcolor="#D7CF8D"]
-POINT_0x5947b6ab6b00 -> POINT_0x5947b6ab6ad0
-POINT_0x5947b6ab6b00 -> POINT_0x5947b6ab6c80
-POINT_0x5947b6ab6c80 -> POINT_0x5947b6ab6b60
-POINT_0x5947b6ab6c80 -> POINT_0x5947b6ab6cb0
-POINT_0x5947b6ab6b60 -> POINT_0x5947b6ab6b30
-POINT_0x5947b6ab6b60 -> POINT_0x5947b6ab6c20
-POINT_0x5947b6ab6c20 -> POINT_0x5947b6ab6bc0
-POINT_0x5947b6ab6c20 -> POINT_0x5947b6ab6c50
-POINT_0x5947b6ab6bc0 -> POINT_0x5947b6ab6b90
-POINT_0x5947b6ab6bc0 -> POINT_0x5947b6ab6bf0
+POINT_0x58436a036cb0[shape=Mrecord, label = "POINT_0x58436a036cb0 | type - OPERATION(8) | if", style="filled",fillcolor="#D7CF8D"]
+POINT_0x58436a036d70[shape=Mrecord, label = "POINT_0x58436a036d70 | type - OPERATION(0) | +", style="filled",fillcolor="#D7CF8D"]
+POINT_0x58436a036d10[shape=Mrecord, label = "POINT_0x58436a036d10 | type - OPERATION(0) | +", style="filled",fillcolor="#D7CF8D"]
+POINT_0x58436a036ce0[shape=Mrecord, label = "POINT_0x58436a036ce0 | type - NUMBER (1) | value - 7", style="filled",fillcolor="#D7CF8D"]
+POINT_0x58436a036d40[shape=Mrecord, label = "POINT_0x58436a036d40 | type - NUMBER (1) | value - 1", style="filled",fillcolor="#D7CF8D"]
+POINT_0x58436a036da0[shape=Mrecord, label = "POINT_0x58436a036da0 | type - VARIABLE (2) | value - x (num - 1))", style="filled",fillcolor="#D7CF8D"]
+POINT_0x58436a036e00[shape=Mrecord, label = "POINT_0x58436a036e00 | type - OPERATION(9) | =", style="filled",fillcolor="#D7CF8D"]
+POINT_0x58436a036dd0[shape=Mrecord, label = "POINT_0x58436a036dd0 | type - VARIABLE (2) | value - y (num - 2))", style="filled",fillcolor="#D7CF8D"]
+POINT_0x58436a036f80[shape=Mrecord, label = "POINT_0x58436a036f80 | type - OPERATION(0) | +", style="filled",fillcolor="#D7CF8D"]
+POINT_0x58436a036e60[shape=Mrecord, label = "POINT_0x58436a036e60 | type - OPERATION(0) | +", style="filled",fillcolor="#D7CF8D"]
+POINT_0x58436a036e30[shape=Mrecord, label = "POINT_0x58436a036e30 | type - NUMBER (1) | value - 1", style="filled",fillcolor="#D7CF8D"]
+POINT_0x58436a036f20[shape=Mrecord, label = "POINT_0x58436a036f20 | type - OPERATION(3) | /", style="filled",fillcolor="#D7CF8D"]
+POINT_0x58436a036ec0[shape=Mrecord, label = "POINT_0x58436a036ec0 | type - OPERATION(6) | ^", style="filled",fillcolor="#D7CF8D"]
+POINT_0x58436a036e90[shape=Mrecord, label = "POINT_0x58436a036e90 | type - NUMBER (1) | value - 2", style="filled",fillcolor="#D7CF8D"]
+POINT_0x58436a036ef0[shape=Mrecord, label = "POINT_0x58436a036ef0 | type - NUMBER (1) | value - 3", style="filled",fillcolor="#D7CF8D"]
+POINT_0x58436a036f50[shape=Mrecord, label = "POINT_0x58436a036f50 | type - NUMBER (1) | value - 8", style="filled",fillcolor="#D7CF8D"]
+POINT_0x58436a036fb0[shape=Mrecord, label = "POINT_0x58436a036fb0 | type - VARIABLE (2) | value - x (num - 1))", style="filled",fillcolor="#D7CF8D"]
+POINT_0x58436a036cb0 -> POINT_0x58436a036d70
+POINT_0x58436a036cb0 -> POINT_0x58436a036e00
+POINT_0x58436a036d70 -> POINT_0x58436a036d10
+POINT_0x58436a036d70 -> POINT_0x58436a036da0
+POINT_0x58436a036d10 -> POINT_0x58436a036ce0
+POINT_0x58436a036d10 -> POINT_0x58436a036d40
+POINT_0x58436a036e00 -> POINT_0x58436a036dd0
+POINT_0x58436a036e00 -> POINT_0x58436a036f80
+POINT_0x58436a036f80 -> POINT_0x58436a036e60
+POINT_0x58436a036f80 -> POINT_0x58436a036fb0
+POINT_0x58436a036e60 -> POINT_0x58436a036e30
+POINT_0x58436a036e60 -> POINT_0x58436a036f20
+POINT_0x58436a036f20 -> POINT_0x58436a036ec0
+POINT_0x58436a036f20 -> POINT_0x58436a036f50
+POINT_0x58436a036ec0 -> POINT_0x58436a036e90
+POINT_0x58436a036ec0 -> POINT_0x58436a036ef0
 }

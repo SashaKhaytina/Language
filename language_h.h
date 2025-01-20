@@ -36,9 +36,12 @@ enum AllOperations
     COS,
     POW,
     LN,
+    IF,
     ASSIGM,
     OPEN_SKOB,
-    CLOSE_SKOB
+    CLOSE_SKOB, 
+    F_OPEN_SKOB, 
+    F_CLOSE_SKOB
     // DOLL 
 };
 
