@@ -5,9 +5,13 @@
 #include "token.h"
 
 
-// Node* GetGraph             (Tokens* tokens, VariableArr* all_var);
+Node* GetGraph             (Tokens* tokens, VariableArr* all_var);
+
 Node* GetIf                (Tokens* tokens, VariableArr* all_var);
 Node* GetAssigm            (Tokens* tokens, VariableArr* all_var);
+Node* GetOp                (Tokens* tokens, VariableArr* all_var);
+
+Node* GetChain(Tokens* tokens, VariableArr* all_var);
 
 Node* GetNumber            (Tokens* tokens);
 Node* GetE_Addition        (Tokens* tokens, VariableArr* all_var);

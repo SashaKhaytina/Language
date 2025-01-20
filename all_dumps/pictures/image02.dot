@@ -2,21 +2,69 @@ digraph
 {
 bgcolor="#F2EECB";
 rankdir = TB;
-POINT_0x58436a036cb0[shape=Mrecord, label = "POINT_0x58436a036cb0 | type - OPERATION(8) | if", style="filled",fillcolor="#D7CF8D"]
-POINT_0x58436a036d70[shape=Mrecord, label = "POINT_0x58436a036d70 | type - OPERATION(0) | +", style="filled",fillcolor="#D7CF8D"]
-POINT_0x58436a036d10[shape=Mrecord, label = "POINT_0x58436a036d10 | type - NUMBER (1) | value - 8", style="filled",fillcolor="#D7CF8D"]
-POINT_0x58436a036da0[shape=Mrecord, label = "POINT_0x58436a036da0 | type - VARIABLE (2) | value - x (num - 1))", style="filled",fillcolor="#D7CF8D"]
-POINT_0x58436a036e00[shape=Mrecord, label = "POINT_0x58436a036e00 | type - OPERATION(9) | =", style="filled",fillcolor="#D7CF8D"]
-POINT_0x58436a036dd0[shape=Mrecord, label = "POINT_0x58436a036dd0 | type - VARIABLE (2) | value - y (num - 2))", style="filled",fillcolor="#D7CF8D"]
-POINT_0x58436a036f80[shape=Mrecord, label = "POINT_0x58436a036f80 | type - OPERATION(0) | +", style="filled",fillcolor="#D7CF8D"]
-POINT_0x58436a036e60[shape=Mrecord, label = "POINT_0x58436a036e60 | type - NUMBER (1) | value - 2", style="filled",fillcolor="#D7CF8D"]
-POINT_0x58436a036fb0[shape=Mrecord, label = "POINT_0x58436a036fb0 | type - VARIABLE (2) | value - x (num - 1))", style="filled",fillcolor="#D7CF8D"]
-POINT_0x58436a036cb0 -> POINT_0x58436a036d70
-POINT_0x58436a036cb0 -> POINT_0x58436a036e00
-POINT_0x58436a036d70 -> POINT_0x58436a036d10
-POINT_0x58436a036d70 -> POINT_0x58436a036da0
-POINT_0x58436a036e00 -> POINT_0x58436a036dd0
-POINT_0x58436a036e00 -> POINT_0x58436a036f80
-POINT_0x58436a036f80 -> POINT_0x58436a036e60
-POINT_0x58436a036f80 -> POINT_0x58436a036fb0
+POINT_0x5968e6e78bf0[shape=Mrecord, label = "POINT_0x5968e6e78bf0 | type - OPERATION(14) | ;", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e78560[shape=Mrecord, label = "POINT_0x5968e6e78560 | type - OPERATION(8) | if", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e78620[shape=Mrecord, label = "POINT_0x5968e6e78620 | type - OPERATION(0) | +", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e785c0[shape=Mrecord, label = "POINT_0x5968e6e785c0 | type - NUMBER (1) | value - 8", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e78650[shape=Mrecord, label = "POINT_0x5968e6e78650 | type - VARIABLE (2) | value - x (num - 1))", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e78890[shape=Mrecord, label = "POINT_0x5968e6e78890 | type - OPERATION(14) | ;", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e786b0[shape=Mrecord, label = "POINT_0x5968e6e786b0 | type - OPERATION(9) | =", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e78680[shape=Mrecord, label = "POINT_0x5968e6e78680 | type - VARIABLE (2) | value - y (num - 2))", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e78830[shape=Mrecord, label = "POINT_0x5968e6e78830 | type - OPERATION(0) | +", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e78710[shape=Mrecord, label = "POINT_0x5968e6e78710 | type - NUMBER (1) | value - 2", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e78860[shape=Mrecord, label = "POINT_0x5968e6e78860 | type - VARIABLE (2) | value - x (num - 1))", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e78a10[shape=Mrecord, label = "POINT_0x5968e6e78a10 | type - OPERATION(14) | ;", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e788f0[shape=Mrecord, label = "POINT_0x5968e6e788f0 | type - OPERATION(9) | =", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e788c0[shape=Mrecord, label = "POINT_0x5968e6e788c0 | type - VARIABLE (2) | value - x (num - 1))", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e78950[shape=Mrecord, label = "POINT_0x5968e6e78950 | type - NUMBER (1) | value - 6", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e78bc0[shape=Mrecord, label = "POINT_0x5968e6e78bc0 | type - OPERATION(14) | ;", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e78a40[shape=Mrecord, label = "POINT_0x5968e6e78a40 | type - OPERATION(8) | if", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e78aa0[shape=Mrecord, label = "POINT_0x5968e6e78aa0 | type - NUMBER (1) | value - 4", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e78b90[shape=Mrecord, label = "POINT_0x5968e6e78b90 | type - OPERATION(14) | ;", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e78b30[shape=Mrecord, label = "POINT_0x5968e6e78b30 | type - OPERATION(9) | =", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e78b00[shape=Mrecord, label = "POINT_0x5968e6e78b00 | type - VARIABLE (2) | value - y (num - 2))", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e78b60[shape=Mrecord, label = "POINT_0x5968e6e78b60 | type - NUMBER (1) | value - 1", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e78cb0[shape=Mrecord, label = "POINT_0x5968e6e78cb0 | type - OPERATION(14) | ;", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e78c50[shape=Mrecord, label = "POINT_0x5968e6e78c50 | type - OPERATION(9) | =", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e78c20[shape=Mrecord, label = "POINT_0x5968e6e78c20 | type - VARIABLE (2) | value - y (num - 2))", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e78c80[shape=Mrecord, label = "POINT_0x5968e6e78c80 | type - NUMBER (1) | value - 3", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e78e00[shape=Mrecord, label = "POINT_0x5968e6e78e00 | type - OPERATION(14) | ;", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e78ce0[shape=Mrecord, label = "POINT_0x5968e6e78ce0 | type - OPERATION(8) | if", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e78d10[shape=Mrecord, label = "POINT_0x5968e6e78d10 | type - NUMBER (1) | value - 5", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e78dd0[shape=Mrecord, label = "POINT_0x5968e6e78dd0 | type - OPERATION(14) | ;", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e78d70[shape=Mrecord, label = "POINT_0x5968e6e78d70 | type - OPERATION(9) | =", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e78d40[shape=Mrecord, label = "POINT_0x5968e6e78d40 | type - VARIABLE (2) | value - y (num - 2))", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e78da0[shape=Mrecord, label = "POINT_0x5968e6e78da0 | type - NUMBER (1) | value - 6", style="filled",fillcolor="#D7CF8D"]
+POINT_0x5968e6e78bf0 -> POINT_0x5968e6e78560
+POINT_0x5968e6e78bf0 -> POINT_0x5968e6e78cb0
+POINT_0x5968e6e78560 -> POINT_0x5968e6e78620
+POINT_0x5968e6e78560 -> POINT_0x5968e6e78890
+POINT_0x5968e6e78620 -> POINT_0x5968e6e785c0
+POINT_0x5968e6e78620 -> POINT_0x5968e6e78650
+POINT_0x5968e6e78890 -> POINT_0x5968e6e786b0
+POINT_0x5968e6e78890 -> POINT_0x5968e6e78a10
+POINT_0x5968e6e786b0 -> POINT_0x5968e6e78680
+POINT_0x5968e6e786b0 -> POINT_0x5968e6e78830
+POINT_0x5968e6e78830 -> POINT_0x5968e6e78710
+POINT_0x5968e6e78830 -> POINT_0x5968e6e78860
+POINT_0x5968e6e78a10 -> POINT_0x5968e6e788f0
+POINT_0x5968e6e78a10 -> POINT_0x5968e6e78bc0
+POINT_0x5968e6e788f0 -> POINT_0x5968e6e788c0
+POINT_0x5968e6e788f0 -> POINT_0x5968e6e78950
+POINT_0x5968e6e78bc0 -> POINT_0x5968e6e78a40
+POINT_0x5968e6e78a40 -> POINT_0x5968e6e78aa0
+POINT_0x5968e6e78a40 -> POINT_0x5968e6e78b90
+POINT_0x5968e6e78b90 -> POINT_0x5968e6e78b30
+POINT_0x5968e6e78b30 -> POINT_0x5968e6e78b00
+POINT_0x5968e6e78b30 -> POINT_0x5968e6e78b60
+POINT_0x5968e6e78cb0 -> POINT_0x5968e6e78c50
+POINT_0x5968e6e78cb0 -> POINT_0x5968e6e78e00
+POINT_0x5968e6e78c50 -> POINT_0x5968e6e78c20
+POINT_0x5968e6e78c50 -> POINT_0x5968e6e78c80
+POINT_0x5968e6e78e00 -> POINT_0x5968e6e78ce0
+POINT_0x5968e6e78ce0 -> POINT_0x5968e6e78d10
+POINT_0x5968e6e78ce0 -> POINT_0x5968e6e78dd0
+POINT_0x5968e6e78dd0 -> POINT_0x5968e6e78d70
+POINT_0x5968e6e78d70 -> POINT_0x5968e6e78d40
+POINT_0x5968e6e78d70 -> POINT_0x5968e6e78da0
 }

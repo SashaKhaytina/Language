@@ -13,7 +13,7 @@ typedef int    ForDump;
 const char* const FILE_CODE             = "code.txt";
 const size_t      MAX_NAME_IDENT_SIZE   = 200;
 const int         MAX_OPER_SYMBOLS_SIZE = 2;
-const int         MAX_TOKEN_S_ARR_SIZE  = 100;
+const int         MAX_TOKEN_S_ARR_SIZE  = 10000;
 const int         MAX_VAR_COUNT         = 10;
 
 
@@ -41,8 +41,12 @@ enum AllOperations
     OPEN_SKOB,
     CLOSE_SKOB, 
     F_OPEN_SKOB, 
-    F_CLOSE_SKOB
-    // DOLL 
+    F_CLOSE_SKOB, 
+
+    SPLIT, 
+
+
+    DOLL 
 };
 
 

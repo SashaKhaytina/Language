@@ -9,6 +9,11 @@
 #include "../math/operations.h"
 
 
+
+#define CHECK(op) ((tokens->current_ind < tokens->size) && (tokens->array[tokens->current_ind]->type == OPERATION) && (tokens->array[tokens->current_ind]->value.op_num == op))
+
+
+
 static Node* create_node_like_token(Token* token);
 static void  check_symb_error      (AllOperations op, Tokens* tokens);
 
@@ -43,39 +48,48 @@ static void check_symb_error(AllOperations op, Tokens* tokens)
 // And everywhere (tokens->current_ind < tokens->size)?
 
 
-// Node* GetGraph(Tokens* tokens, VariableArr* all_var)
-// {
-//     assert(tokens);
-//     assert(all_var);
+Node* GetGraph(Tokens* tokens, VariableArr* all_var)
+{
+    assert(tokens);
+    assert(all_var);
 
 
-//     Node* val = GetE_Addition(tokens, all_var);
+    Node* val = GetChain(tokens, all_var);
 
-//     // bool operation = (tokens->array[tokens->current_ind]->type == OPERATION);
-//     // if ((tokens->array[tokens->current_ind]->type != OPERATION) || tokens->array[tokens->current_ind]->value.op_num != DOLL) // if node->type not DEFAULT
-//     // {
-//     //     printf("ERROR\n");
-//     // }
+    check_symb_error(DOLL, tokens);
+    tokens->current_ind++;
 
-//     return val;
 
-// }
+    // bool operation = (tokens->array[tokens->current_ind]->type == OPERATION);
+    // if ((tokens->array[tokens->current_ind]->type != OPERATION) || tokens->array[tokens->current_ind]->value.op_num != DOLL) // if node->type not DEFAULT
+    // {
+    //     printf("ERROR\n");
+    // }
+
+    return val;
+
+}
+
+
+
+
+
+
+
+
 
 Node* GetIf(Tokens* tokens, VariableArr* all_var)
 {
     assert(tokens);
     assert(all_var);
 
-    // if ((tokens->array[tokens->current_ind]->type != OPERATION) || (tokens->array[tokens->current_ind]->value.op_num != IF)) // в Func эта проверка написана по-другому. Кажется, там неправильно
-    //     printf("ERROR SYNTAX. Want 'if'\n");
+
     check_symb_error(IF, tokens);
     
     Node* op_tok = create_node_like_token(tokens->array[tokens->current_ind]);
     tokens->current_ind++;
     
 
-    // if ((tokens->array[tokens->current_ind]->type != OPERATION) || (tokens->array[tokens->current_ind]->value.op_num != OPEN_SKOB)) // в Func эта проверка написана по-другому. Кажется, там неправильно
-    //     printf("ERROR SYNTAX. Want '('\n");
     check_symb_error(OPEN_SKOB, tokens);
     tokens->current_ind++;
 
@@ -83,31 +97,24 @@ Node* GetIf(Tokens* tokens, VariableArr* all_var)
     Node* val_condition = GetE_Addition(tokens, all_var);
 
 
-    // if ((tokens->array[tokens->current_ind]->type != OPERATION) || (tokens->array[tokens->current_ind]->value.op_num != CLOSE_SKOB)) // в Func эта проверка написана по-другому. Кажется, там неправильно
-    //     printf("ERROR SYNTAX. Want ')'\n");
     check_symb_error(CLOSE_SKOB, tokens);
     tokens->current_ind++;
 
-
-    // if ((tokens->array[tokens->current_ind]->type != OPERATION) || (tokens->array[tokens->current_ind]->value.op_num != F_OPEN_SKOB)) // в Func эта проверка написана по-другому. Кажется, там неправильно
-    //     printf("ERROR SYNTAX. Want '{'\n");
     check_symb_error(F_OPEN_SKOB, tokens);
     tokens->current_ind++;
 
-    Node* val_to_do = GetAssigm(tokens, all_var);
 
-    // if ((tokens->current_ind >= tokens->size) || (tokens->array[tokens->current_ind]->type != OPERATION) || (tokens->array[tokens->current_ind]->value.op_num != F_CLOSE_SKOB)) // в Func эта проверка написана по-другому. Кажется, там неправильно
-    //     printf("ERROR SYNTAX. Want '}'\n");
+    Node* val_to_do = GetChain(tokens, all_var);
+
+
     check_symb_error(F_CLOSE_SKOB, tokens);
     tokens->current_ind++;
 
     
     op_tok->left = val_condition;
     op_tok->right = val_to_do;
-    // val = op_tok;
 
     return op_tok;
-
 }
 
 
@@ -138,6 +145,54 @@ Node* GetAssigm(Tokens* tokens, VariableArr* all_var)
 }
 
 
+Node* GetOp(Tokens* tokens, VariableArr* all_var)
+{
+    if (CHECK(IF))
+    {
+        Node* val = GetIf(tokens, all_var);
+        check_symb_error(SPLIT, tokens);
+
+        Node* op_tok = create_node_like_token(tokens->array[tokens->current_ind]);
+        tokens->current_ind++;
+
+        op_tok->left  = val;
+        op_tok->right = NULL;
+
+        return op_tok;
+    }
+    else
+    {
+        Node* val = GetAssigm(tokens, all_var);
+        check_symb_error(SPLIT, tokens);
+
+        Node* op_tok = create_node_like_token(tokens->array[tokens->current_ind]);
+        tokens->current_ind++;
+
+        op_tok->left  = val;
+        op_tok->right = NULL;
+
+        return op_tok;
+    }
+}
+
+
+
+Node* GetChain(Tokens* tokens, VariableArr* all_var)
+{
+    Node* op_tok = GetOp(tokens, all_var);
+    Node* op_now = op_tok;
+
+    // ???????????????????????????????????????????????? (is this okey?)
+    while(CHECK(IF) || ((tokens->current_ind < tokens->size) && (tokens->array[tokens->current_ind]->type == VARIABLE)))
+    {
+        Node* val = GetOp(tokens, all_var);
+
+        op_now->right = val;
+        op_now = val;
+    }
+
+    return op_tok;
+}
 
 
 

@@ -21,7 +21,9 @@ static bool find_and_create_op(Tokens* tokens, char* name);
 
 static void pass_spaces(int* point_current_letter, char* arr_file_tree)
 {
-    while ((arr_file_tree[*point_current_letter] == '\t') || (arr_file_tree[*point_current_letter] == '\n') || (arr_file_tree[*point_current_letter] == ' ')) *point_current_letter += 1;
+    // while ((arr_file_tree[*point_current_letter] == '\t') || (arr_file_tree[*point_current_letter] == '\n') || (arr_file_tree[*point_current_letter] == ' ')) *point_current_letter += 1;
+    while (isspace(arr_file_tree[*point_current_letter]) != 0) *point_current_letter += 1;
+
 }
 
 
@@ -113,7 +115,8 @@ void get_token(Tokens* tokens, char* arr_file_tree, VariableArr* all_var)
     int current_symbol = 0;
 
     // while (arr_file_tree[current_symbol] != '\0') // see parser.cpp
-    while (arr_file_tree[current_symbol] != '\n')
+    // while (arr_file_tree[current_symbol] != '\n')
+    while (arr_file_tree[current_symbol] != '\0')
     {
         pass_spaces(&current_symbol, arr_file_tree);
 

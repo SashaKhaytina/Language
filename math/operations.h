@@ -55,9 +55,13 @@ const Operation op_arr[] = {
                                 {OPEN_SKOB,    "(",   NULL,          NULL},
                                 {CLOSE_SKOB,   ")",   NULL,          NULL},
                                 {F_OPEN_SKOB,  "{",   NULL,          NULL},
-                                {F_CLOSE_SKOB, "}",   NULL,          NULL}
+                                {F_CLOSE_SKOB, "}",   NULL,          NULL}, 
 
-                                // {DOLL,       "$",   NULL,     NULL,          NULL} 
+
+                                {SPLIT,        ";",   NULL,          NULL},
+
+
+                                {DOLL,         "$",   NULL,          NULL} 
                             };
 
 
