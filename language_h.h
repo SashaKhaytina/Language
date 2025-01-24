@@ -11,6 +11,9 @@ typedef int    ForDump;
 
 
 const char* const FILE_CODE             = "code.txt";
+const char* const FILE_TREE             = "code_tree.txt";
+const char* const FILE_ASM_CODE         = "file_asm_code.txt";
+
 const size_t      MAX_NAME_IDENT_SIZE   = 200;
 const int         MAX_OPER_SYMBOLS_SIZE = 2;
 const int         MAX_TOKEN_S_ARR_SIZE  = 10000;

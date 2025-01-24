@@ -7,6 +7,9 @@
 #include "../math/operations.h"
 
 
+static void print_tree_in_file(FILE* file, Node* node, size_t deep, VariableArr* all_var);
+static void fprint_node       (FILE* file, Node* node, VariableArr* all_var);
+
 
 
 
@@ -84,6 +87,42 @@ TypeNode solve_subtree(Node* current_node, int* diference)
     return current_node->type;
 }
 
+
+
+
+// void create_file_tree(Tree* tree, VariableArr* all_var)
+// {
+//     FILE* file = fopen(FILE_TREE, "w");
+
+//     print_tree_in_file(file, tree->root, 0, all_var);
+
+//     fclose(file);
+// }
+
+
+// static void print_tree_in_file(FILE* file, Node* node, size_t deep, VariableArr* all_var)
+// {   
+//     char tabs[MAX_DEEP_TREE] = {};
+//     for (size_t i = 0; i < deep; i++) tabs[i] = '\t';
+    
+//     if (node == NULL) return;
+
+//     // if      (node->type == NUMBER)    fprintf(file, "%s{%lg\n", tabs, node->value.num);
+//     // else if (node->type == VARIABLE)  fprintf(file, "%s{%s\n", tabs, all_var->arr[node->value.var_num].name);
+//     // else if (node->type == OPERATION) fprintf(file, "%s{%lg\n", tabs, node->value.num);
+//     fprintf(file, "%s{", tabs);
+//     fprint_node(file, node, all_var);
+
+//     print_tree_in_file(file, node->left, deep + 1, all_var);
+//     print_tree_in_file(file, node->right, deep + 1, all_var);
+//     fprintf(file, "%s}\n", tabs);
+// }
+
+
+
+
+
+
 void trivial_solver(Node* current_node, int* diference)
 {
     if (current_node == NULL) return;
@@ -120,3 +159,92 @@ void solve(Node* current_node)
 
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Написать нормально вывод в файл. 
+
+void create_file_tree(Tree* tree, VariableArr* all_var)
+{
+    FILE* file = fopen(FILE_TREE, "w");
+
+    print_tree_in_file(file, tree->root, 0, all_var);
+
+    fclose(file);
+}
+
+
+static void print_tree_in_file(FILE* file, Node* node, size_t deep, VariableArr* all_var)
+{   
+    char tabs[MAX_DEEP_TREE] = {};
+    for (size_t i = 0; i < deep; i++) tabs[i] = '\t';
+    
+    if (node == NULL) return;
+
+    // if      (node->type == NUMBER)    fprintf(file, "%s{%lg\n", tabs, node->value.num);
+    // else if (node->type == VARIABLE)  fprintf(file, "%s{%s\n", tabs, all_var->arr[node->value.var_num].name);
+    // else if (node->type == OPERATION) fprintf(file, "%s{%lg\n", tabs, node->value.num);
+    fprintf(file, "%s{", tabs);
+    fprint_node(file, node, all_var);
+    fprintf(file, "\n");
+
+    print_tree_in_file(file, node->left, deep + 1, all_var);
+    print_tree_in_file(file, node->right, deep + 1, all_var);
+    fprintf(file, "%s}\n", tabs);
+}
+
+
+
+
+
+static void fprint_node(FILE* file, Node* node, VariableArr* all_var)
+{
+    switch (node->type)
+    {
+    case NUMBER:
+    {
+        fprintf(file, "%g", node->value.num);
+        break;
+    }
+
+    case VARIABLE:
+    {
+        for (int i = 0; i < all_var->size; i++) 
+        {
+            if (all_var->arr[i].num == node->value.var_num) { fprintf(file, "%s", all_var->arr[i].name); break; }
+        }
+        break;
+    }
+
+    case OPERATION:
+    {
+        for (int i = 0; i < LEN_STRUCT_OP_ARR; i++)
+        {
+            if (op_arr[i].num == node->value.op_num) { fprintf(file, "%s", op_arr[i].name); break; }
+        }
+        break;
+    }
+
+    default:
+    {
+        printf("ERROR type node\n");
+        break;
+    }
+    }
+}

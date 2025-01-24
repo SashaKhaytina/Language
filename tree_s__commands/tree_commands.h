@@ -24,6 +24,9 @@
 #define _COPY(arg)        copy_branch(arg)
 
 
+const int MAX_DEEP_TREE = 10000;
+
+
 
 Node* create_new_node_num(TypeNode type, Elem_t num,           Node* left, Node* right); 
 Node* create_new_node_var(TypeNode type, int var_num,          Node* left, Node* right); 
@@ -34,6 +37,9 @@ void solve(Node* current_node);
 
 TypeNode solve_subtree (Node* current_node, int* diference); 
 void     trivial_solver(Node* current_node, int* diference);
+
+
+void create_file_tree(Tree* tree, VariableArr* all_var);
 
 
 #endif

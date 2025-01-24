@@ -5,6 +5,8 @@
 #include "tree_s__commands/free.h"
 #include "tree_s__commands/tree_commands.h"
 
+#include "backend/create_asm_code.h"
+
 #include "math/operations.h"
 
 
@@ -36,6 +38,8 @@ int main()
 
     dump(tree.root, &dumps_counter, &all_var);
 
+    // SOLVE - other file!
+
     solve(tree.root);
     dump(tree.root, &dumps_counter, &all_var);
     print_tree(tree.root, &all_var);
@@ -43,8 +47,28 @@ int main()
 
 
 
+    create_file_tree(&tree, &all_var);
 
-    // fclose(file);
+    fclose(file);
+
+
+
+
+
+    // TO ASM!!!!!!!!
+
+    FILE* file_asm_code = fopen(FILE_ASM_CODE, "w");
+
+    int flag = 0;
+    
+    tree_to_asm(file_asm_code, tree.root, &all_var, &flag);
+    fprintf(file_asm_code, "\nHLT\n");
+
+
+
+
+
+
 
     // free_tree(tree.root);
     // free_tokens(&tokens);
