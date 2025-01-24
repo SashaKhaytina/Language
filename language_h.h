@@ -37,6 +37,7 @@ enum AllOperations
     POW,
     LN,
     IF,
+    WHILE,
     ASSIGM,
     OPEN_SKOB,
     CLOSE_SKOB, 

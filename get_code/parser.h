@@ -7,6 +7,7 @@
 
 Node* GetGraph             (Tokens* tokens, VariableArr* all_var);
 
+Node* GetWhile             (Tokens* tokens, VariableArr* all_var);
 Node* GetIf                (Tokens* tokens, VariableArr* all_var);
 Node* GetAssigm            (Tokens* tokens, VariableArr* all_var);
 Node* GetOp                (Tokens* tokens, VariableArr* all_var);

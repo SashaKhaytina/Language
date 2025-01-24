@@ -120,6 +120,51 @@ Node* GetIf(Tokens* tokens, VariableArr* all_var)
 
 
 
+Node* GetWhile(Tokens* tokens, VariableArr* all_var)
+{
+    assert(tokens);
+    assert(all_var);
+
+
+    check_symb_error(WHILE, tokens);
+    
+    Node* op_tok = create_node_like_token(tokens->array[tokens->current_ind]);
+    tokens->current_ind++;
+    
+
+    check_symb_error(OPEN_SKOB, tokens);
+    tokens->current_ind++;
+
+
+    Node* val_condition = GetE_Addition(tokens, all_var);
+
+
+    check_symb_error(CLOSE_SKOB, tokens);
+    tokens->current_ind++;
+
+    check_symb_error(F_OPEN_SKOB, tokens);
+    tokens->current_ind++;
+
+
+    Node* val_to_do = GetChain(tokens, all_var);
+
+
+    check_symb_error(F_CLOSE_SKOB, tokens);
+    tokens->current_ind++;
+
+    
+    op_tok->left = val_condition;
+    op_tok->right = val_to_do;
+
+    return op_tok;
+}
+
+
+
+
+
+
+
 Node* GetAssigm(Tokens* tokens, VariableArr* all_var)
 {
     assert(tokens);
@@ -127,7 +172,8 @@ Node* GetAssigm(Tokens* tokens, VariableArr* all_var)
 
     Node* val_var = GetVariable(tokens, all_var);
 
-    if ((tokens->array[tokens->current_ind]->type != OPERATION) || (tokens->array[tokens->current_ind]->value.op_num != ASSIGM)) // в Func эта проверка написана по-другому. Кажется, там неправильно
+    // if ((tokens->array[tokens->current_ind]->type != OPERATION) || (tokens->array[tokens->current_ind]->value.op_num != ASSIGM)) // в Func эта проверка написана по-другому. Кажется, там неправильно
+    if (!CHECK(ASSIGM))  
         printf("ERROR SYNTAX. Want '='\n");
     
     Node* op_tok = create_node_like_token(tokens->array[tokens->current_ind]);
@@ -147,32 +193,34 @@ Node* GetAssigm(Tokens* tokens, VariableArr* all_var)
 
 Node* GetOp(Tokens* tokens, VariableArr* all_var)
 {
+    assert(tokens);
+    assert(all_var);
+
+
+    Node* val = NULL;
+
     if (CHECK(IF))
     {
-        Node* val = GetIf(tokens, all_var);
-        check_symb_error(SPLIT, tokens);
-
-        Node* op_tok = create_node_like_token(tokens->array[tokens->current_ind]);
-        tokens->current_ind++;
-
-        op_tok->left  = val;
-        op_tok->right = NULL;
-
-        return op_tok;
+        val = GetIf(tokens, all_var);
+    }
+    else if (CHECK(WHILE))
+    {
+        val = GetWhile(tokens, all_var);
     }
     else
     {
-        Node* val = GetAssigm(tokens, all_var);
-        check_symb_error(SPLIT, tokens);
-
-        Node* op_tok = create_node_like_token(tokens->array[tokens->current_ind]);
-        tokens->current_ind++;
-
-        op_tok->left  = val;
-        op_tok->right = NULL;
-
-        return op_tok;
+        val = GetAssigm(tokens, all_var);
     }
+
+    check_symb_error(SPLIT, tokens);
+
+    Node* op_tok = create_node_like_token(tokens->array[tokens->current_ind]);
+    tokens->current_ind++;
+
+    op_tok->left  = val;
+    op_tok->right = NULL;
+
+    return op_tok;
 }
 
 
@@ -183,7 +231,7 @@ Node* GetChain(Tokens* tokens, VariableArr* all_var)
     Node* op_now = op_tok;
 
     // ???????????????????????????????????????????????? (is this okey?)
-    while(CHECK(IF) || ((tokens->current_ind < tokens->size) && (tokens->array[tokens->current_ind]->type == VARIABLE)))
+    while(CHECK(IF) || CHECK(WHILE) || ((tokens->current_ind < tokens->size) && (tokens->array[tokens->current_ind]->type == VARIABLE)))
     {
         Node* val = GetOp(tokens, all_var);
 
@@ -221,11 +269,12 @@ Node* GetE_Addition(Tokens* tokens, VariableArr* all_var)
 
     Node* val = GetT_Multiplication(tokens, all_var);
 
-    while ((tokens->current_ind < tokens->size) 
-            &&
-            ((tokens->array[tokens->current_ind]->type == OPERATION) && 
-            ((tokens->array[tokens->current_ind]->value.op_num == ADD) || 
-             (tokens->array[tokens->current_ind]->value.op_num == SUB))))
+    // while ((tokens->current_ind < tokens->size) 
+    //         &&
+    //         ((tokens->array[tokens->current_ind]->type == OPERATION) && 
+    //         ((tokens->array[tokens->current_ind]->value.op_num == ADD) || 
+    //          (tokens->array[tokens->current_ind]->value.op_num == SUB))))
+    while (CHECK(ADD) || CHECK(SUB))
     {
         Node* op_tok = create_node_like_token(tokens->array[tokens->current_ind]);
         tokens->current_ind++;
@@ -249,11 +298,12 @@ Node* GetT_Multiplication(Tokens* tokens, VariableArr* all_var)
 
     Node* val = GetP_Pow(tokens, all_var);
 
-    while ((tokens->current_ind < tokens->size)                        
-            &&
-           ((tokens->array[tokens->current_ind]->type == OPERATION)  && 
-          ((tokens->array[tokens->current_ind]->value.op_num == MUL) || 
-           (tokens->array[tokens->current_ind]->value.op_num == DIV))))
+    // while ((tokens->current_ind < tokens->size)                        
+    //         &&
+    //        ((tokens->array[tokens->current_ind]->type == OPERATION)  && 
+    //       ((tokens->array[tokens->current_ind]->value.op_num == MUL) || 
+    //        (tokens->array[tokens->current_ind]->value.op_num == DIV))))
+    while (CHECK(MUL) || CHECK(DIV))
     {
         Node* op_tok = create_node_like_token(tokens->array[tokens->current_ind]);
         tokens->current_ind++;
@@ -280,10 +330,11 @@ Node* GetP_Pow(Tokens* tokens, VariableArr* all_var)
 
     Node* val = Get_Heaviest_Oper(tokens, all_var);
 
-    while ((tokens->current_ind < tokens->size)                       
-            &&
-            tokens->array[tokens->current_ind]->type == OPERATION && 
-            tokens->array[tokens->current_ind]->value.op_num == POW)
+    // while ((tokens->current_ind < tokens->size)                       
+    //         &&
+    //         tokens->array[tokens->current_ind]->type == OPERATION && 
+    //         tokens->array[tokens->current_ind]->value.op_num == POW)
+    while (CHECK(POW))
     {
         Node* op_tok = create_node_like_token(tokens->array[tokens->current_ind]);
         tokens->current_ind++;
@@ -310,13 +361,15 @@ Node* Get_Heaviest_Oper(Tokens* tokens, VariableArr* all_var)
 
     if ((tokens->array[tokens->current_ind]->type == OPERATION))
     {
-        if (tokens->array[tokens->current_ind]->value.op_num == OPEN_SKOB) 
+        // if (tokens->array[tokens->current_ind]->value.op_num == OPEN_SKOB)
+        if (CHECK(OPEN_SKOB)) 
         {
             tokens->current_ind++;
             Node* val = GetE_Addition(tokens, all_var);
             
-            if ((tokens->array[tokens->current_ind]->type == OPERATION) && 
-                (tokens->array[tokens->current_ind]->value.op_num != CLOSE_SKOB)) 
+            // if ((tokens->array[tokens->current_ind]->type == OPERATION) && 
+            //     (tokens->array[tokens->current_ind]->value.op_num != CLOSE_SKOB))
+            if (!CHECK(CLOSE_SKOB)) 
                 printf("ERROR SYNTAX. Want ')'\n"); 
 
             tokens->current_ind++;
@@ -347,23 +400,26 @@ Node* GetF_Function_one_arg(Tokens* tokens, VariableArr* all_var)
     assert(all_var);
 
 
-    if ((tokens->array[tokens->current_ind]->value.op_num == SIN) || 
-        (tokens->array[tokens->current_ind]->value.op_num == COS) || 
-        (tokens->array[tokens->current_ind]->value.op_num == LN))
+    // if ((tokens->array[tokens->current_ind]->value.op_num == SIN) || 
+    //     (tokens->array[tokens->current_ind]->value.op_num == COS) || 
+    //     (tokens->array[tokens->current_ind]->value.op_num == LN))
+    if (CHECK(SIN) || CHECK(COS) || CHECK(LN))
     {
 
         Node* op_tok = create_node_like_token(tokens->array[tokens->current_ind]);
         tokens->current_ind++;
 
-        if ((tokens->array[tokens->current_ind]->type == OPERATION) && 
-            (tokens->array[tokens->current_ind]->value.op_num != OPEN_SKOB)) 
+        // if ((tokens->array[tokens->current_ind]->type == OPERATION) && 
+        //     (tokens->array[tokens->current_ind]->value.op_num != OPEN_SKOB)) 
+        if (!CHECK(OPEN_SKOB))
             printf("ERROR SYNTAX. Want '('\n");
         tokens->current_ind++;
 
         Node* val = GetE_Addition(tokens, all_var); 
 
-        if ((tokens->array[tokens->current_ind]->type == OPERATION) && 
-            (tokens->array[tokens->current_ind]->value.op_num != CLOSE_SKOB)) 
+        // if ((tokens->array[tokens->current_ind]->type == OPERATION) && 
+        //     (tokens->array[tokens->current_ind]->value.op_num != CLOSE_SKOB)) 
+        if (!CHECK(CLOSE_SKOB))
             printf("ERROR SYNTAX. Want ')'\n");
         tokens->current_ind++;
 
