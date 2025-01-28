@@ -28,8 +28,8 @@ const Operation_to_asm op_to_asm_arr[] = {
                                 {ASSIGM,        "=",    asm_code_assigm},
 
                                 {EQUAL,         "==",   asm_code_equal},
-                                // {MORE,          ">",    asm_code_more},
-                                // {LESS,          "<",    asm_code_less},
+                                {MORE,          ">",    asm_code_more},
+                                {LESS,          "<",    asm_code_less},
                                 {GEQ,           ">=",   asm_code_geq},
                                 {LEQ,           "<=",   asm_code_leq},
 

@@ -11,6 +11,8 @@ void asm_code_if    (FILE* file_asm_code, Node* node, VariableArr* all_var, int*
 void asm_code_while (FILE* file_asm_code, Node* node, VariableArr* all_var, int* flag);
 void asm_code_assigm(FILE* file_asm_code, Node* node, VariableArr* all_var,int* flag);
 void asm_code_equal (FILE* file_asm_code, Node* node, VariableArr* all_var,int* flag);
+void asm_code_more  (FILE* file_asm_code, Node* node, VariableArr* all_var,int* flag);
+void asm_code_less  (FILE* file_asm_code, Node* node, VariableArr* all_var,int* flag);
 void asm_code_geq   (FILE* file_asm_code, Node* node, VariableArr* all_var,int* flag);
 void asm_code_leq   (FILE* file_asm_code, Node* node, VariableArr* all_var,int* flag);
 

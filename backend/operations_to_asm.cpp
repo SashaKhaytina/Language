@@ -129,28 +129,28 @@ void asm_code_equal(FILE* file_asm_code, Node* node, VariableArr* all_var,int* f
 }
 
 
-// void asm_code_more(FILE* file_asm_code, Node* node, VariableArr* all_var,int* flag)
-// {
-//     printf("MORE\n");
+void asm_code_more(FILE* file_asm_code, Node* node, VariableArr* all_var,int* flag)
+{
+    printf("MORE\n");
 
-//     tree_to_asm(file_asm_code, node->left , all_var, flag);
-//     tree_to_asm(file_asm_code, node->right, all_var, flag);
+    tree_to_asm(file_asm_code, node->left , all_var, flag);
+    tree_to_asm(file_asm_code, node->right, all_var, flag);
 
-//     fprintf(file_asm_code, "??????? ");
+    fprintf(file_asm_code, "JNG ");
 
-// }
+}
 
 
-// void asm_code_less(FILE* file_asm_code, Node* node, VariableArr* all_var,int* flag)
-// {
-//     printf("LESS\n");
+void asm_code_less(FILE* file_asm_code, Node* node, VariableArr* all_var,int* flag)
+{
+    printf("LESS\n");
 
-//     tree_to_asm(file_asm_code, node->left , all_var, flag);
-//     tree_to_asm(file_asm_code, node->right, all_var, flag);
+    tree_to_asm(file_asm_code, node->left , all_var, flag);
+    tree_to_asm(file_asm_code, node->right, all_var, flag);
 
-//     fprintf(file_asm_code, "????? ");
+    fprintf(file_asm_code, "JNL ");
 
-// }
+}
 
 
 void asm_code_geq(FILE* file_asm_code, Node* node, VariableArr* all_var,int* flag)

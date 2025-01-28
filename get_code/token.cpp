@@ -189,7 +189,6 @@ static void get_oper(int* current_symbol, char* arr_file_tree, Tokens* tokens)
 
     int current_symbol_here = *current_symbol;
     
-
     while (isalnum(arr_file_tree[current_symbol_here]) == 0 && isspace(arr_file_tree[current_symbol_here]) == 0)
     {
         op[len_op] = arr_file_tree[current_symbol_here];

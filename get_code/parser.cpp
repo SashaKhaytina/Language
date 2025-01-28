@@ -235,7 +235,7 @@ Node* GetCompare(Tokens* tokens, VariableArr* all_var)
 
     Node* val = GetE_Addition(tokens, all_var);
 
-    if (!(CHECK(EQUAL) || CHECK(GEQ) || CHECK(LEQ))) printf("ERROR SYNTAX. Want compare symbol\n"); //|| CHECK(MORE) || CHECK(LESS)
+    if (!(CHECK(EQUAL) || CHECK(MORE) || CHECK(LESS) || CHECK(GEQ) || CHECK(LEQ))) printf("ERROR SYNTAX. Want compare symbol\n"); //|| CHECK(MORE) || CHECK(LESS)
 
     Node* op_tok = create_node_like_token(tokens->array[tokens->current_ind]);
     tokens->current_ind++;

@@ -54,8 +54,8 @@ const Operation op_arr[] = {
                                 {ASSIGM,        "=",    NULL,          NULL},
 
                                 {EQUAL,         "==",   NULL,          NULL},
-                                // {MORE,          ">",    NULL,          NULL},
-                                // {LESS,          "<",    NULL,          NULL},
+                                {MORE,          ">",    NULL,          NULL},
+                                {LESS,          "<",    NULL,          NULL},
                                 {GEQ,           ">=",   NULL,          NULL},
                                 {LEQ,           "<=",   NULL,          NULL},
 

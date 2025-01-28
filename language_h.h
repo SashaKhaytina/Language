@@ -44,8 +44,8 @@ enum AllOperations
     ASSIGM,
 
     EQUAL,
-    // MORE,
-    // LESS, 
+    MORE,
+    LESS, 
     GEQ,
     LEQ,
 

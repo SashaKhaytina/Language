@@ -21,7 +21,7 @@ static void graph_create_point(Node* node, FILE* file, VariableArr* all_var)
             // if (op_arr[i].num == node->value.op_num) { fprintf(file, "POINT_%p[shape=Mrecord, label = \"POINT_%p | type - OPERATION(%d) | %s\", style=\"filled\",fillcolor=\"%s\"]\n", node, node, node->value.op_num, op_arr[i].name, ELEM_TREE_COLOR); break; }
             if (op_arr[i].num == node->value.op_num) 
             {
-                if (node->value.op_num == EQUAL || node->value.op_num == GEQ || node->value.op_num == LEQ) // node->value.op_num == MORE || node->value.op_num == LESS || 
+                if (node->value.op_num == EQUAL || node->value.op_num == MORE || node->value.op_num == LESS || node->value.op_num == GEQ || node->value.op_num == LEQ) // node->value.op_num == MORE || node->value.op_num == LESS || 
                 {
                     fprintf(file, "POINT_%p[shape=Mrecord, label = \"POINT_%p | type - OPERATION(%d) | \\%s\", style=\"filled\",fillcolor=\"%s\"]\n", node, node, node->value.op_num, op_arr[i].name, ELEM_TREE_COLOR); 
                     break;
