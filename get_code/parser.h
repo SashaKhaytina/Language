@@ -11,6 +11,7 @@ Node* GetWhile             (Tokens* tokens, VariableArr* all_var);
 Node* GetIf                (Tokens* tokens, VariableArr* all_var);
 Node* GetAssigm            (Tokens* tokens, VariableArr* all_var);
 Node* GetOp                (Tokens* tokens, VariableArr* all_var);
+Node* GetCompare           (Tokens* tokens, VariableArr* all_var);
 
 Node* GetChain(Tokens* tokens, VariableArr* all_var);
 

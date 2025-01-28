@@ -27,6 +27,13 @@ const Operation_to_asm op_to_asm_arr[] = {
                                 {WHILE,        "while", asm_code_while},
                                 {ASSIGM,        "=",    asm_code_assigm},
 
+                                {EQUAL,         "==",   asm_code_equal},
+                                // {MORE,          ">",    asm_code_more},
+                                // {LESS,          "<",    asm_code_less},
+                                {GEQ,           ">=",   asm_code_geq},
+                                {LEQ,           "<=",   asm_code_leq},
+
+
                                 {OPEN_SKOB,    "(",     NULL}, // их нет в дереве!
                                 {CLOSE_SKOB,   ")",     NULL}, // их нет в дереве!
                                 {F_OPEN_SKOB,  "{",     NULL}, // их нет в дереве!

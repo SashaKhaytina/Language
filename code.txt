@@ -1,17 +1,17 @@
 x = 1;
-y = 3 + x;
+y = 4 + x;
 
-if (y)
+if (y >= 0)
 {
-    if (0){x=x/2 +2/x *y -y;};
+    if (0 >= 0){x=x/2 +2/x *y -y;};
     y = y - 1;
-    while (x)
+    while (x<=y)
     {
-        if (0){x=0;};
+        if (0 <= 4){x=0;};
         x =x - 1;
     };
 };
-while(3)
+while(3 == 3)
 {
     d = 0;
 };

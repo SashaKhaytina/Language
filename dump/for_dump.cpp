@@ -18,7 +18,21 @@ static void graph_create_point(Node* node, FILE* file, VariableArr* all_var)
     {
         for (int i = 0; i < LEN_STRUCT_OP_ARR; i++)
         {
-            if (op_arr[i].num == node->value.op_num) { fprintf(file, "POINT_%p[shape=Mrecord, label = \"POINT_%p | type - OPERATION(%d) | %s\", style=\"filled\",fillcolor=\"%s\"]\n", node, node, node->value.op_num, op_arr[i].name, ELEM_TREE_COLOR); break; }
+            // if (op_arr[i].num == node->value.op_num) { fprintf(file, "POINT_%p[shape=Mrecord, label = \"POINT_%p | type - OPERATION(%d) | %s\", style=\"filled\",fillcolor=\"%s\"]\n", node, node, node->value.op_num, op_arr[i].name, ELEM_TREE_COLOR); break; }
+            if (op_arr[i].num == node->value.op_num) 
+            {
+                if (node->value.op_num == EQUAL || node->value.op_num == GEQ || node->value.op_num == LEQ) // node->value.op_num == MORE || node->value.op_num == LESS || 
+                {
+                    fprintf(file, "POINT_%p[shape=Mrecord, label = \"POINT_%p | type - OPERATION(%d) | \\%s\", style=\"filled\",fillcolor=\"%s\"]\n", node, node, node->value.op_num, op_arr[i].name, ELEM_TREE_COLOR); 
+                    break;
+                }
+                else
+                {
+                fprintf(file, "POINT_%p[shape=Mrecord, label = \"POINT_%p | type - OPERATION(%d) | %s\", style=\"filled\",fillcolor=\"%s\"]\n", node, node, node->value.op_num, op_arr[i].name, ELEM_TREE_COLOR); 
+                break; 
+                }
+            }
+
         }
     }
     else if (node->type == NUMBER) fprintf(file, "POINT_%p[shape=Mrecord, label = \"POINT_%p | type - NUMBER (%d) | value - %g\", style=\"filled\",fillcolor=\"%s\"]\n", node, node, node->type, node->value.num, ELEM_TREE_COLOR);

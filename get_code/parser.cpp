@@ -94,7 +94,9 @@ Node* GetIf(Tokens* tokens, VariableArr* all_var)
     tokens->current_ind++;
 
 
-    Node* val_condition = GetE_Addition(tokens, all_var);
+    // Node* val_condition = GetE_Addition(tokens, all_var);
+    Node* val_condition = GetCompare(tokens, all_var);
+
 
 
     check_symb_error(CLOSE_SKOB, tokens);
@@ -136,7 +138,8 @@ Node* GetWhile(Tokens* tokens, VariableArr* all_var)
     tokens->current_ind++;
 
 
-    Node* val_condition = GetE_Addition(tokens, all_var);
+    // Node* val_condition = GetE_Addition(tokens, all_var);
+    Node* val_condition = GetCompare(tokens, all_var);
 
 
     check_symb_error(CLOSE_SKOB, tokens);
@@ -223,6 +226,27 @@ Node* GetOp(Tokens* tokens, VariableArr* all_var)
     return op_tok;
 }
 
+
+Node* GetCompare(Tokens* tokens, VariableArr* all_var)
+{
+    assert(tokens);
+    assert(all_var);
+
+
+    Node* val = GetE_Addition(tokens, all_var);
+
+    if (!(CHECK(EQUAL) || CHECK(GEQ) || CHECK(LEQ))) printf("ERROR SYNTAX. Want compare symbol\n"); //|| CHECK(MORE) || CHECK(LESS)
+
+    Node* op_tok = create_node_like_token(tokens->array[tokens->current_ind]);
+    tokens->current_ind++;
+
+    Node* val2 = GetE_Addition(tokens, all_var);
+
+    op_tok->left  = val;
+    op_tok->right = val2;
+
+    return op_tok;
+}
 
 
 Node* GetChain(Tokens* tokens, VariableArr* all_var)

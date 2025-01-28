@@ -66,21 +66,26 @@ TypeNode solve_subtree(Node* current_node, int* diference)
 
         if (condition_left && condition_right)
         {
+            bool is_changed = false;
             for (int i = 0; i < LEN_STRUCT_OP_ARR; i++)
             {
                 if (op_arr[i].num == current_node->value.op_num)
                 {
                     if (op_arr[i].calculate == NULL) break;
                     current_node->value.num = op_arr[i].calculate(current_node->left, current_node->right);
+                    is_changed = true;
                     break;
                 }
             }
 
-            current_node->type = NUMBER;
-            current_node->left = NULL;
-            current_node->right = NULL;
+            if (is_changed)
+            {
+                current_node->type = NUMBER;
+                current_node->left = NULL;
+                current_node->right = NULL;
 
-            (*diference)++;
+                (*diference)++;
+            }
         }
     }
 

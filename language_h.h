@@ -15,7 +15,7 @@ const char* const FILE_TREE             = "code_tree.txt";
 const char* const FILE_ASM_CODE         = "file_asm_code.txt";
 
 const size_t      MAX_NAME_IDENT_SIZE   = 200;
-const int         MAX_OPER_SYMBOLS_SIZE = 2;
+const int         MAX_OPER_SYMBOLS_SIZE = 11;
 const int         MAX_TOKEN_S_ARR_SIZE  = 10000;
 const int         MAX_VAR_COUNT         = 10;
 
@@ -42,6 +42,13 @@ enum AllOperations
     IF,
     WHILE,
     ASSIGM,
+
+    EQUAL,
+    // MORE,
+    // LESS, 
+    GEQ,
+    LEQ,
+
     OPEN_SKOB,
     CLOSE_SKOB, 
     F_OPEN_SKOB, 
@@ -50,7 +57,9 @@ enum AllOperations
     SPLIT, 
 
 
-    DOLL 
+    DOLL,
+
+    ERROR
 };
 
 

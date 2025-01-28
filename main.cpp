@@ -47,9 +47,9 @@ int main()
 
 
 
-    create_file_tree(&tree, &all_var);
+    // create_file_tree(&tree, &all_var);
 
-    fclose(file);
+    // fclose(file);
 
 
 
