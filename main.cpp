@@ -11,8 +11,8 @@
 
 
 
-void print_tree(Node* node, VariableArr* all_var);
-void print_node(Node* node, VariableArr* all_var);
+void print_tree(Node* node, VariableArr* all_var, FunctionsArr* all_func);
+void print_node(Node* node, VariableArr* all_var, FunctionsArr* all_func);
 
 
 
@@ -23,26 +23,27 @@ int main()
 
     ForDump dumps_counter = 0;
 
-    VariableArr all_var = {};
+    VariableArr  all_var  = {};
+    FunctionsArr all_func = {};
 
     Tokens tokens = {};
 
 
-    get_tree(file, &tree, &all_var, &tokens);
+    get_tree(file, &tree, &all_var, &all_func, &tokens);
 
-    print_node(tree.root, &all_var);
+    print_node(tree.root, &all_var, &all_func);
     printf("\n");
 
-    print_tree(tree.root, &all_var);
+    print_tree(tree.root, &all_var, &all_func);
     printf("\n");
 
-    dump(tree.root, &dumps_counter, &all_var);
+    dump(tree.root, &dumps_counter, &all_var, &all_func);
 
     // SOLVE - other file!
 
     solve(tree.root);
-    dump(tree.root, &dumps_counter, &all_var);
-    print_tree(tree.root, &all_var);
+    dump(tree.root, &dumps_counter, &all_var, &all_func);
+    print_tree(tree.root, &all_var, &all_func);
     printf("\n");
 
 
@@ -57,12 +58,12 @@ int main()
 
     // TO ASM!!!!!!!!
 
-    FILE* file_asm_code = fopen(FILE_ASM_CODE, "w");
+    // FILE* file_asm_code = fopen(FILE_ASM_CODE, "w");
 
-    int flag = 0;
+    // int flag = 0;
     
-    tree_to_asm(file_asm_code, tree.root, &all_var, &flag);
-    fprintf(file_asm_code, "\nHLT\n");
+    // tree_to_asm(file_asm_code, tree.root, &all_var, &flag);
+    // fprintf(file_asm_code, "\nHLT\n");
 
 
 
@@ -80,20 +81,20 @@ int main()
 
 
 
-void print_tree(Node* node, VariableArr* all_var)
+void print_tree(Node* node, VariableArr* all_var, FunctionsArr* all_func)
 {   
     if (node == NULL) return;
 
-    if (node->type != OPERATION) print_node(node, all_var);
+    if (node->type != OPERATION) print_node(node, all_var, all_func);
     else
     {
         printf("(");
-        print_tree(node->left, all_var);
+        print_tree(node->left, all_var, all_func);
 
 
-        print_node(node, all_var);
+        print_node(node, all_var, all_func);
 
-        print_tree(node->right, all_var);
+        print_tree(node->right, all_var, all_func);
         printf(")");
     }
 }
@@ -101,7 +102,7 @@ void print_tree(Node* node, VariableArr* all_var)
 
 
 
-void print_node(Node* node, VariableArr* all_var)
+void print_node(Node* node, VariableArr* all_var, FunctionsArr* all_func)
 {
     switch (node->type)
     {
@@ -125,6 +126,15 @@ void print_node(Node* node, VariableArr* all_var)
         for (int i = 0; i < LEN_STRUCT_OP_ARR; i++)
         {
             if (op_arr[i].num == node->value.op_num) { printf("%s", op_arr[i].name); break; }
+        }
+        break;
+    }
+
+    case CREATED_FUNC:
+    {
+        for (int i = 0; i < all_func->size; i++) 
+        {
+            if (all_func->arr[i].num == node->value.func_num) { printf("%s", all_func->arr[i].name); break; }
         }
         break;
     }

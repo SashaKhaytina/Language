@@ -27,7 +27,7 @@ static size_t size_file(FILE* file)
 }
 
 
-void get_tree(FILE* file, Tree* tree, VariableArr* all_var, Tokens* tokens)
+void get_tree(FILE* file, Tree* tree, VariableArr* all_var, FunctionsArr* all_func, Tokens* tokens)
 {
     size_t len_text = size_file(file);
 
@@ -41,9 +41,11 @@ void get_tree(FILE* file, Tree* tree, VariableArr* all_var, Tokens* tokens)
     get_token(tokens, arr_file_tree, all_var);
 
     print_token(tokens, all_var);
-    printf("\n");
+    printf(" - TOKENS\n");
 
-    tree->root = GetGraph(tokens, all_var);
+    tree->root = GetGraph(tokens, all_var, all_func);
+    // tree->root = Get_Created_Func(tokens, all_var, all_func);
+
     // tree->root = GetAssigm(tokens, all_var);
     // tree->root = GetIf(tokens, all_var);
     // tree->root = GetOp(tokens, all_var);

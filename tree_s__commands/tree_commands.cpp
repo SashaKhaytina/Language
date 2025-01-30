@@ -7,8 +7,8 @@
 #include "../math/operations.h"
 
 
-static void print_tree_in_file(FILE* file, Node* node, size_t deep, VariableArr* all_var);
-static void fprint_node       (FILE* file, Node* node, VariableArr* all_var);
+static void print_tree_in_file(FILE* file, Node* node, size_t deep, VariableArr* all_var, FunctionsArr* all_func);
+static void fprint_node       (FILE* file, Node* node, VariableArr* all_var, FunctionsArr* all_func);
 
 
 
@@ -50,6 +50,20 @@ Node* create_new_node_op(TypeNode type, AllOperations op_num, Node* left, Node* 
 
     return new_node;
 }
+
+
+Node* create_new_node_func(TypeNode type, int func_num, Node* left, Node* right)
+{
+    Node* new_node = (Node*) calloc(1, sizeof(Node));
+
+    new_node->type           = CREATED_FUNC;
+    new_node->value.func_num = func_num;
+    new_node->left           = left;
+    new_node->right          = right;
+
+    return new_node;
+}
+
 
 
 
@@ -185,17 +199,17 @@ void solve(Node* current_node)
 
 // Написать нормально вывод в файл. 
 
-void create_file_tree(Tree* tree, VariableArr* all_var)
+void create_file_tree(Tree* tree, VariableArr* all_var, FunctionsArr* all_func)
 {
     FILE* file = fopen(FILE_TREE, "w");
 
-    print_tree_in_file(file, tree->root, 0, all_var);
+    print_tree_in_file(file, tree->root, 0, all_var, all_func);
 
     fclose(file);
 }
 
 
-static void print_tree_in_file(FILE* file, Node* node, size_t deep, VariableArr* all_var)
+static void print_tree_in_file(FILE* file, Node* node, size_t deep, VariableArr* all_var, FunctionsArr* all_func)
 {   
     char tabs[MAX_DEEP_TREE] = {};
     for (size_t i = 0; i < deep; i++) tabs[i] = '\t';
@@ -206,11 +220,11 @@ static void print_tree_in_file(FILE* file, Node* node, size_t deep, VariableArr*
     // else if (node->type == VARIABLE)  fprintf(file, "%s{%s\n", tabs, all_var->arr[node->value.var_num].name);
     // else if (node->type == OPERATION) fprintf(file, "%s{%lg\n", tabs, node->value.num);
     fprintf(file, "%s{", tabs);
-    fprint_node(file, node, all_var);
+    fprint_node(file, node, all_var, all_func);
     fprintf(file, "\n");
 
-    print_tree_in_file(file, node->left, deep + 1, all_var);
-    print_tree_in_file(file, node->right, deep + 1, all_var);
+    print_tree_in_file(file, node->left, deep + 1, all_var, all_func);
+    print_tree_in_file(file, node->right, deep + 1, all_var, all_func);
     fprintf(file, "%s}\n", tabs);
 }
 
@@ -218,7 +232,7 @@ static void print_tree_in_file(FILE* file, Node* node, size_t deep, VariableArr*
 
 
 
-static void fprint_node(FILE* file, Node* node, VariableArr* all_var)
+static void fprint_node(FILE* file, Node* node, VariableArr* all_var, FunctionsArr* all_func)
 {
     switch (node->type)
     {
@@ -242,6 +256,15 @@ static void fprint_node(FILE* file, Node* node, VariableArr* all_var)
         for (int i = 0; i < LEN_STRUCT_OP_ARR; i++)
         {
             if (op_arr[i].num == node->value.op_num) { fprintf(file, "%s", op_arr[i].name); break; }
+        }
+        break;
+    }
+    
+    case CREATED_FUNC:
+    {
+        for (int i = 0; i < all_func->size; i++) 
+        {
+            if (all_func->arr[i].num == node->value.func_num) { fprintf(file, "%s", all_func->arr[i].name); break; }
         }
         break;
     }

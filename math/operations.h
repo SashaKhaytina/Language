@@ -51,13 +51,15 @@ const Operation op_arr[] = {
 
                                 {IF,           "if",    NULL,          NULL},
                                 {WHILE,        "while", NULL,          NULL},
-                                {ASSIGM,        "=",    NULL,          NULL},
+                                {ASSIGM,       "=",     NULL,          NULL},
 
-                                {EQUAL,         "==",   NULL,          NULL},
-                                {MORE,          ">",    NULL,          NULL},
-                                {LESS,          "<",    NULL,          NULL},
-                                {GEQ,           ">=",   NULL,          NULL},
-                                {LEQ,           "<=",   NULL,          NULL},
+                                {FUNC,         "func",  NULL,          NULL},
+
+                                {EQUAL,        "==",    NULL,          NULL},
+                                {MORE,         ">",     NULL,          NULL},
+                                {LESS,         "<",     NULL,          NULL},
+                                {GEQ,          ">=",    NULL,          NULL},
+                                {LEQ,          "<=",    NULL,          NULL},
 
                                 {OPEN_SKOB,    "(",     NULL,          NULL},
                                 {CLOSE_SKOB,   ")",     NULL,          NULL},
@@ -66,10 +68,13 @@ const Operation op_arr[] = {
 
 
                                 {SPLIT,        ";",     NULL,          NULL},
+                                {COMMA,        ",",     NULL,          NULL},
 
 
                                 {DOLL,         "$",     NULL,          NULL},
-                                {ERROR,        "ERROR",  NULL,         NULL}
+                                {MAIN,         "MAIN",  NULL,          NULL},
+
+                                {ERROR,        "ERROR", NULL,         NULL}
                             };
 
 

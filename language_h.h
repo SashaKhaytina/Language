@@ -18,6 +18,7 @@ const size_t      MAX_NAME_IDENT_SIZE   = 200;
 const int         MAX_OPER_SYMBOLS_SIZE = 11;
 const int         MAX_TOKEN_S_ARR_SIZE  = 10000;
 const int         MAX_VAR_COUNT         = 10;
+const int         MAX_FUNC_COUNT        = 10;
 
 
 enum TypeNode
@@ -25,7 +26,8 @@ enum TypeNode
     DEFAULT,
     NUMBER,
     VARIABLE,
-    OPERATION
+    OPERATION, 
+    CREATED_FUNC
 };
 
 
@@ -39,9 +41,12 @@ enum AllOperations
     COS,
     POW,
     LN,
+
     IF,
     WHILE,
     ASSIGM,
+
+    FUNC,
 
     EQUAL,
     MORE,
@@ -55,9 +60,11 @@ enum AllOperations
     F_CLOSE_SKOB, 
 
     SPLIT, 
+    COMMA,
 
 
     DOLL,
+    MAIN,
 
     ERROR
 };
@@ -76,11 +83,32 @@ struct VariableArr
 };
 
 
+
+
+
+struct Function
+{
+    int num;
+    char* name; 
+    int num_args;
+};
+
+struct FunctionsArr
+{
+    Function arr[MAX_VAR_COUNT];
+    size_t size;
+};
+
+
+
+
+
 union Value
 {
     Elem_t num;
     int var_num;
     AllOperations op_num;
+    int func_num;
 };
 
 

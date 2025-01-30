@@ -16,12 +16,13 @@
 
 static Node* create_node_like_token(Token* token);
 static void  check_symb_error      (AllOperations op, Tokens* tokens);
-
+static int insert_new_func         (Node* node, VariableArr* all_var, FunctionsArr* all_func, int* num_args);
 
 static Node* create_node_like_token(Token* token)
 {
-    if (token->type == NUMBER)    return _NUM(token->value.num);
-    if (token->type == VARIABLE)  return _VAR(token->value.var_num);
+    if (token->type == NUMBER)       return _NUM(token->value.num);
+    if (token->type == VARIABLE)     return _VAR(token->value.var_num);
+    if (token->type == CREATED_FUNC) return _FUN(token->value.func_num);
 
     return create_new_node_op(OPERATION, token->value.op_num, NULL, NULL);
 }
@@ -48,16 +49,28 @@ static void check_symb_error(AllOperations op, Tokens* tokens)
 // And everywhere (tokens->current_ind < tokens->size)?
 
 
-Node* GetGraph(Tokens* tokens, VariableArr* all_var)
+Node* GetGraph(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func)
 {
     assert(tokens);
     assert(all_var);
 
 
+    // Node* val = GetChain(tokens, all_var);
+    // Node* val = Get_Created_Func(tokens, all_var, all_func);
+    Node* val_func = Get_Chain_Func(tokens, all_var, all_func);
+
+    check_symb_error(MAIN, tokens);
+    Node* main_proc = create_node_like_token(tokens->array[tokens->current_ind]);
+    tokens->current_ind++;
+
     Node* val = GetChain(tokens, all_var);
+
 
     check_symb_error(DOLL, tokens);
     tokens->current_ind++;
+
+    main_proc->left  = val_func;
+    main_proc->right = val;
 
 
     // bool operation = (tokens->array[tokens->current_ind]->type == OPERATION);
@@ -66,9 +79,399 @@ Node* GetGraph(Tokens* tokens, VariableArr* all_var)
     //     printf("ERROR\n");
     // }
 
-    return val;
+    return main_proc;
 
 }
+
+
+
+
+
+Node* Get_Chain_Func(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func)
+{
+    Node* main_proc  = NULL;
+    Node* chain_func = NULL;
+
+    bool is_first_func = true;
+
+    while (CHECK(FUNC))
+    {
+        // printf("YES func\n");
+        Node* val = Get_Created_Func(tokens, all_var, all_func);
+        
+        check_symb_error(SPLIT, tokens);
+        if (is_first_func)
+        {
+            chain_func = create_node_like_token(tokens->array[tokens->current_ind]);
+            tokens->current_ind++;
+        }
+        else
+        {
+            chain_func->right = create_node_like_token(tokens->array[tokens->current_ind]);
+            tokens->current_ind++;
+            chain_func = chain_func->right;
+        }
+
+        if (is_first_func)
+        {
+            main_proc = chain_func;
+            is_first_func = false;
+        }
+
+        chain_func->left = val;
+        // chain_func = chain_func->right;
+
+    }
+
+    return main_proc;
+}
+
+
+
+
+Node* Get_Created_Func(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func)
+{
+    assert(tokens);
+    assert(all_var);
+
+    // printf("CREATED_FUNC\n");
+
+
+    check_symb_error(FUNC, tokens);
+    tokens->current_ind++;
+    // printf("func\n");
+
+    Node* op_tok = GetVariable(tokens, all_var);
+
+    // Node* new_func = create_node_like_token();
+    // Node* new_func = {};
+    
+    // new_func->type = CREATED_FUNC;
+    // new_func->left  = NULL;
+    // new_func->right = NULL;
+
+    op_tok->type = CREATED_FUNC;
+    // printf("OK1\n");
+
+
+    check_symb_error(OPEN_SKOB, tokens);
+    tokens->current_ind++;
+    // printf("(\n");
+
+    int num_args = 0;
+
+    Node* args = NULL;
+
+    if (tokens->array[tokens->current_ind]->type == VARIABLE)
+    {
+        // Тут же по-хорошему другие переменные!???????????
+        // Node* arg_now = GetVariable(tokens, all_var);
+        // num_args++;
+
+        // Node* now_node = {};
+        // Node* arg_2 = {};
+
+        // while (CHECK(COMMA))
+        // {
+        //     now_node = create_node_like_token(tokens->array[tokens->current_ind]);
+            
+        //     arg_2 = GetVariable(tokens, all_var);
+        //     num_args++;
+
+
+        //     now_node->left = arg_now;
+        //     arg_now = arg_2;
+        // }
+
+        // now_node->right = arg_2;
+
+        args = Get_Args(tokens, all_var, &num_args);
+    }
+
+    check_symb_error(CLOSE_SKOB, tokens);
+    tokens->current_ind++;
+    // printf(")\n");
+
+    check_symb_error(F_OPEN_SKOB, tokens);
+    tokens->current_ind++;
+    // printf("{\n");
+
+    Node* body = GetChain(tokens, all_var);
+
+    check_symb_error(F_CLOSE_SKOB, tokens);
+    tokens->current_ind++;
+    // printf("}\n");
+
+
+    op_tok->value.func_num = insert_new_func(op_tok, all_var, all_func, &num_args);
+    // printf("OK func_num\n");
+    op_tok->left  = args;
+    // printf("OK left\n");
+    op_tok->right = body;
+    // printf("OK right\n");
+
+
+    return op_tok;
+
+
+}
+
+
+
+
+
+
+Node* Get_Args(Tokens* tokens, VariableArr* all_var, int* num_args)
+{
+    // Тут же по-хорошему другие переменные!???????????
+    Node* arg_now = GetVariable(tokens, all_var);
+    (*num_args)++;
+
+    while (CHECK(COMMA))
+    {
+        Node* now_node = create_node_like_token(tokens->array[tokens->current_ind]);
+        tokens->current_ind++;
+        
+        Node* arg_2 = GetVariable(tokens, all_var);
+        (*num_args)++;
+
+
+        now_node->left = arg_now;
+        now_node->right = arg_2;
+        arg_now = now_node;
+    }
+
+    return arg_now;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+static int insert_new_func(Node* node, VariableArr* all_var, FunctionsArr* all_func, int* num_args)
+{
+    all_func->size++;
+
+    for (size_t i = 0; i < all_var->size; i++)
+    {
+        if (all_var->arr[i].num == node->value.var_num) 
+        { 
+            all_func->arr[all_func->size - 1].name = all_var->arr[i].name;
+            all_var->arr[i].num = -1; // Что тут делать? По сути я не убираю имя функции из списка переменных
+            break; 
+        }
+    }
+    all_func->arr[all_func->size - 1].num = all_func->size;
+    all_func->arr[all_func->size - 1].num_args = *num_args;
+
+    return all_func->size;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// int find_function(char* func_name, FunctionsArr* all_func)
+// {
+//     for (size_t i = 0; i < all_func->size; i++)
+//     {
+//         if (strcmp(all_func->arr[i].name, func_name) == 0) 
+//         { 
+//             free(func_name);
+//             return all_func->arr[i].num; 
+//         }
+//     }
+
+//     return NO_THIS_VAR; 
+// }
+
+
+// int insert_new_variable(char* var_name, VariableArr* all_var)
+// {
+//     all_var->size++;
+
+//     all_var->arr[all_var->size - 1].num = (int)all_var->size;
+//     all_var->arr[all_var->size - 1].name = var_name;
+
+//     return (int)all_var->size;
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -473,6 +876,63 @@ Node* GetVariable(Tokens* tokens, VariableArr* all_var)
     printf("ERROR SYNTAX. Want var\n");
     return NULL; 
 }
+
+
+
+
+
+
+
+
+// Node* Get_My_Func(Tokens* tokens, VariableArr* all_var) 
+// {
+
+//     // Так как тут будет прием еще собственных (написанных) функций, то надо будет сделать функцию, которая по кол-ву аргументов делает эту "запись" (в дерево). 
+//     // (И тогда для каждой функции храним кол-во аргументов)
+//     assert(tokens);
+//     assert(all_var);
+
+
+//     // if ((tokens->array[tokens->current_ind]->value.op_num == SIN) || 
+//     //     (tokens->array[tokens->current_ind]->value.op_num == COS) || 
+//     //     (tokens->array[tokens->current_ind]->value.op_num == LN))
+//     if (CHECK(SIN) || CHECK(COS) || CHECK(LN))
+//     {
+
+//         Node* op_tok = create_node_like_token(tokens->array[tokens->current_ind]);
+//         tokens->current_ind++;
+
+//         // if ((tokens->array[tokens->current_ind]->type == OPERATION) && 
+//         //     (tokens->array[tokens->current_ind]->value.op_num != OPEN_SKOB)) 
+//         if (!CHECK(OPEN_SKOB))
+//             printf("ERROR SYNTAX. Want '('\n");
+//         tokens->current_ind++;
+
+//         Node* val = GetE_Addition(tokens, all_var); 
+
+//         // if ((tokens->array[tokens->current_ind]->type == OPERATION) && 
+//         //     (tokens->array[tokens->current_ind]->value.op_num != CLOSE_SKOB)) 
+//         if (!CHECK(CLOSE_SKOB))
+//             printf("ERROR SYNTAX. Want ')'\n");
+//         tokens->current_ind++;
+
+
+//         op_tok->left = NULL; 
+//         op_tok->right = val;
+
+//         return op_tok;
+
+//     }
+
+//     return NULL;
+// }
+
+
+
+
+
+
+
 
 
 

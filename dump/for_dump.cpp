@@ -7,10 +7,10 @@
 
 static void create_png        (int num);
 static void graph_create_edge (Node* node, FILE* file);       
-static void graph_create_point(Node* node, FILE* file, VariableArr* all_var);     
+static void graph_create_point(Node* node, FILE* file, VariableArr* all_var, FunctionsArr* all_func);     
 
 
-static void graph_create_point(Node* node, FILE* file, VariableArr* all_var)
+static void graph_create_point(Node* node, FILE* file, VariableArr* all_var, FunctionsArr* all_func)
 {   
     if (node == NULL) return;
 
@@ -36,6 +36,17 @@ static void graph_create_point(Node* node, FILE* file, VariableArr* all_var)
         }
     }
     else if (node->type == NUMBER) fprintf(file, "POINT_%p[shape=Mrecord, label = \"POINT_%p | type - NUMBER (%d) | value - %g\", style=\"filled\",fillcolor=\"%s\"]\n", node, node, node->type, node->value.num, ELEM_TREE_COLOR);
+    
+    else if (node->type == CREATED_FUNC)
+    {
+        char* name_func = NULL;
+        for (size_t i = 0; i < all_func->size; i++)
+        {
+            if (all_func->arr[i].num == node->value.func_num) { name_func = all_func->arr[i].name; break;}
+        }
+
+        fprintf(file, "POINT_%p[shape=Mrecord, label = \"POINT_%p | type - FUNCTION (%d) | value - %s (num - %d))\", style=\"filled\",fillcolor=\"%s\"]\n", node, node, node->type, name_func, node->value.func_num, ELEM_TREE_COLOR);
+    }
     else // Var
     {
         char* name_var = NULL;
@@ -48,8 +59,8 @@ static void graph_create_point(Node* node, FILE* file, VariableArr* all_var)
     }
 
     
-    graph_create_point(node->left, file, all_var);
-    graph_create_point(node->right, file, all_var);
+    graph_create_point(node->left, file, all_var, all_func);
+    graph_create_point(node->right, file, all_var, all_func);
 }   
 
 
@@ -76,7 +87,7 @@ static void create_png(int num)
 
 
 
-void dump(Node* node, ForDump* dumps_counter, VariableArr* all_var) // draw subtree
+void dump(Node* node, ForDump* dumps_counter, VariableArr* all_var, FunctionsArr* all_func) // draw subtree
 {
     (*dumps_counter)++;
     int number_of_dump = *dumps_counter;
@@ -89,7 +100,7 @@ void dump(Node* node, ForDump* dumps_counter, VariableArr* all_var) // draw subt
 
     fprintf(file, "digraph\n{\nbgcolor=\"%s\";\nrankdir = TB;\n", FONT_COLOR);
 
-    graph_create_point(node, file, all_var);
+    graph_create_point(node, file, all_var, all_func);
 
     graph_create_edge(node, file);
 
