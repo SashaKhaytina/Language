@@ -44,6 +44,8 @@ void get_tree(FILE* file, Tree* tree, VariableArr* all_var, FunctionsArr* all_fu
     printf(" - TOKENS\n");
 
     tree->root = GetGraph(tokens, all_var, all_func);
+
+    free_tokens(tokens);
     // tree->root = Get_Created_Func(tokens, all_var, all_func);
 
     // tree->root = GetAssigm(tokens, all_var);

@@ -92,7 +92,7 @@ Node* GetGraph(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func)
     Node* val = GetChain(tokens, all_var, all_func);
 
 
-    check_symb_error(DOLL, tokens);
+    check_symb_error(END_PROG, tokens);
     tokens->current_ind++;
 
     main_proc->left  = val_func;
@@ -625,6 +625,32 @@ Node* GetAssigm(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func)
 }
 
 
+Node* GetIO(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func)
+{
+    assert(tokens);
+    assert(all_var);
+
+
+    if (!(CHECK(INPUT) || CHECK(OUTPUT)))  
+        printf("ERROR SYNTAX. Want 'input' or 'output'\n");
+
+
+    Node* op_tok = create_node_like_token(tokens->array[tokens->current_ind]);
+    tokens->current_ind++;
+
+
+    Node* val_var = GetVariable(tokens, all_var);
+
+    // if ((tokens->array[tokens->current_ind]->type != OPERATION) || (tokens->array[tokens->current_ind]->value.op_num != ASSIGM)) // в Func эта проверка написана по-другому. Кажется, там неправильно
+    
+
+    op_tok->left = val_var;
+
+    return op_tok;
+
+}
+
+
 Node* GetOp(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func)
 {
     assert(tokens);
@@ -640,6 +666,10 @@ Node* GetOp(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func)
     else if (CHECK(WHILE))
     {
         val = GetWhile(tokens, all_var, all_func);
+    }
+    else if (CHECK(INPUT) || CHECK(OUTPUT))
+    {
+        val = GetIO(tokens, all_var, all_func);
     }
     else
     {
@@ -686,7 +716,7 @@ Node* GetChain(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func)
     Node* op_now = op_tok;
 
     // ???????????????????????????????????????????????? (is this okey?)
-    while(CHECK(IF) || CHECK(WHILE) || ((tokens->current_ind < tokens->size) && (tokens->array[tokens->current_ind]->type == VARIABLE)))
+    while(CHECK(IF) || CHECK(WHILE) || CHECK(INPUT) || CHECK(OUTPUT) || ((tokens->current_ind < tokens->size) && (tokens->array[tokens->current_ind]->type == VARIABLE)))
     {
         Node* val = GetOp(tokens, all_var, all_func);
 

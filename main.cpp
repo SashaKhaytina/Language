@@ -50,7 +50,7 @@ int main()
 
     // create_file_tree(&tree, &all_var);
 
-    // fclose(file);
+    fclose(file);
 
 
 
@@ -71,10 +71,10 @@ int main()
 
 
 
-    // free_tree(tree.root);
+    free_tree(tree.root);
     // free_tokens(&tokens);
 
-    // free_val(&all_var);
+    free_val(&all_var);
 }
 
 

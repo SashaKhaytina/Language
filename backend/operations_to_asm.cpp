@@ -62,6 +62,26 @@ void asm_code_div(FILE* file_asm_code, Node* node, VariableArr* all_var, int* fl
 }
 
 
+void asm_code_input (FILE* file_asm_code, Node* node, VariableArr* all_var, int* flag)
+{
+    fprintf(file_asm_code, "IN \n");
+    
+    fprintf(file_asm_code, "POP[%d]\n", node->left->value.var_num);
+}
+
+
+void asm_code_output(FILE* file_asm_code, Node* node, VariableArr* all_var, int* flag)
+{
+    tree_to_asm(file_asm_code, node->left,  all_var, flag);
+
+    fprintf(file_asm_code, "OUT \n");
+
+}
+
+
+
+
+
 void asm_code_if(FILE* file_asm_code, Node* node, VariableArr* all_var, int* flag)
 {
     printf("IF\n");

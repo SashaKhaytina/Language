@@ -17,8 +17,8 @@ const char* const FILE_ASM_CODE         = "file_asm_code.txt";
 const size_t      MAX_NAME_IDENT_SIZE   = 200;
 const int         MAX_OPER_SYMBOLS_SIZE = 11;
 const int         MAX_TOKEN_S_ARR_SIZE  = 10000;
-const int         MAX_VAR_COUNT         = 10;
-const int         MAX_FUNC_COUNT        = 10;
+const int         MAX_VAR_COUNT         = 100;
+// const int         MAX_FUNC_COUNT        = 100;
 
 
 enum TypeNode
@@ -43,6 +43,9 @@ enum AllOperations
     POW,
     LN,
 
+    INPUT,
+    OUTPUT,
+
     IF,
     WHILE,
     ASSIGM,
@@ -64,7 +67,7 @@ enum AllOperations
     COMMA,
 
 
-    DOLL,
+    END_PROG,
     MAIN,
 
     ERROR

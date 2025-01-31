@@ -4,7 +4,12 @@ func funcThree (a, b, c){a = 2;};
 
 MAIN
 
+input y;
+
 x = 10 + 1 *(funcOne(1 + 0, y, 5+6) + 9);
 
 if (x == 0){x = 1;};
-$
+
+output x;
+
+ENDPROG

@@ -14,36 +14,39 @@ struct Operation_to_asm
 #include "operations_to_asm.h"
 
 const Operation_to_asm op_to_asm_arr[] = {
-                                {ADD,          "+",     asm_code_add},
-                                {SUB,          "-",     asm_code_sub},
-                                {MUL,          "*",     asm_code_mul},
-                                {DIV,          "/",     asm_code_div},
-                                {SIN,          "sin",   NULL}, // ?
-                                {COS,          "cos",   NULL}, // ?
-                                {POW,          "^",     NULL}, // ? :|
-                                {LN ,          "ln",    NULL}, // ?
+                                {ADD,          "+",        asm_code_add},
+                                {SUB,          "-",        asm_code_sub},
+                                {MUL,          "*",        asm_code_mul},
+                                {DIV,          "/",        asm_code_div},
+                                {SIN,          "sin",      NULL}, // ?
+                                {COS,          "cos",      NULL}, // ?
+                                {POW,          "^",        NULL}, // ? :|
+                                {LN ,          "ln",       NULL}, // ?
 
-                                {IF,           "if",    asm_code_if},
-                                {WHILE,        "while", asm_code_while},
-                                {ASSIGM,        "=",    asm_code_assigm},
+                                {INPUT,        "input",    asm_code_input},
+                                {OUTPUT,       "output",   asm_code_output},
+   
+                                {IF,           "if",       asm_code_if},
+                                {WHILE,        "while",    asm_code_while},
+                                {ASSIGM,        "=",       asm_code_assigm},
+   
+                                {EQUAL,         "==",      asm_code_equal},
+                                {MORE,          ">",       asm_code_more},
+                                {LESS,          "<",       asm_code_less},
+                                {GEQ,           ">=",      asm_code_geq},
+                                {LEQ,           "<=",      asm_code_leq},
+   
+   
+                                {OPEN_SKOB,    "(",        NULL}, // их нет в дереве!
+                                {CLOSE_SKOB,   ")",        NULL}, // их нет в дереве!
+                                {F_OPEN_SKOB,  "{",        NULL}, // их нет в дереве!
+                                {F_CLOSE_SKOB, "}",        NULL}, // их нет в дереве!
 
-                                {EQUAL,         "==",   asm_code_equal},
-                                {MORE,          ">",    asm_code_more},
-                                {LESS,          "<",    asm_code_less},
-                                {GEQ,           ">=",   asm_code_geq},
-                                {LEQ,           "<=",   asm_code_leq},
+
+                                {SPLIT,        ";",        asm_code_split},
 
 
-                                {OPEN_SKOB,    "(",     NULL}, // их нет в дереве!
-                                {CLOSE_SKOB,   ")",     NULL}, // их нет в дереве!
-                                {F_OPEN_SKOB,  "{",     NULL}, // их нет в дереве!
-                                {F_CLOSE_SKOB, "}",     NULL}, // их нет в дереве!
-
-
-                                {SPLIT,        ";",     asm_code_split},
-
-
-                                {DOLL,         "$",     NULL} 
+                                {END_PROG,     "ENDPROG", NULL} 
                             };
 
 const int LEN_STRUCT_OP_TO_ASM_ARR = (int) (sizeof(op_to_asm_arr) / sizeof(Operation_to_asm));
