@@ -37,7 +37,7 @@ static void graph_create_point(Node* node, FILE* file, VariableArr* all_var, Fun
     }
     else if (node->type == NUMBER) fprintf(file, "POINT_%p[shape=Mrecord, label = \"POINT_%p | type - NUMBER (%d) | value - %g\", style=\"filled\",fillcolor=\"%s\"]\n", node, node, node->type, node->value.num, ELEM_TREE_COLOR);
     
-    else if (node->type == CREATED_FUNC)
+    else if (node->type == CREATED_FUNC || node->type == CALL_FUNC)
     {
         char* name_func = NULL;
         for (size_t i = 0; i < all_func->size; i++)
@@ -45,7 +45,9 @@ static void graph_create_point(Node* node, FILE* file, VariableArr* all_var, Fun
             if (all_func->arr[i].num == node->value.func_num) { name_func = all_func->arr[i].name; break;}
         }
 
-        fprintf(file, "POINT_%p[shape=Mrecord, label = \"POINT_%p | type - FUNCTION (%d) | value - %s (num - %d))\", style=\"filled\",fillcolor=\"%s\"]\n", node, node, node->type, name_func, node->value.func_num, ELEM_TREE_COLOR);
+        if (node->type == CREATED_FUNC) fprintf(file, "POINT_%p[shape=Mrecord, label = \"POINT_%p | type - CREATED_FUNCTION (%d) | value - %s (num - %d))\", style=\"filled\",fillcolor=\"%s\"]\n", node, node, node->type, name_func, node->value.func_num, ELEM_TREE_COLOR);
+        else                            fprintf(file, "POINT_%p[shape=Mrecord, label = \"POINT_%p | type - CALL_FUNCTION (%d) | value - %s (num - %d))\", style=\"filled\",fillcolor=\"%s\"]\n", node, node, node->type, name_func, node->value.func_num, ELEM_TREE_COLOR);
+
     }
     else // Var
     {

@@ -27,7 +27,8 @@ enum TypeNode
     NUMBER,
     VARIABLE,
     OPERATION, 
-    CREATED_FUNC
+    CREATED_FUNC, 
+    CALL_FUNC // ?
 };
 
 

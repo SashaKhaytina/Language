@@ -16,7 +16,12 @@
 
 static Node* create_node_like_token(Token* token);
 static void  check_symb_error      (AllOperations op, Tokens* tokens);
-static int insert_new_func         (Node* node, VariableArr* all_var, FunctionsArr* all_func, int* num_args);
+static int   insert_new_func       (Node* node, VariableArr* all_var, FunctionsArr* all_func, int* num_args);
+static char* find_name_var         (int var_num, VariableArr* all_var);
+
+
+
+
 
 static Node* create_node_like_token(Token* token)
 {
@@ -45,6 +50,27 @@ static void check_symb_error(AllOperations op, Tokens* tokens)
 }
 
 
+static char* find_name_var(int var_num, VariableArr* all_var)
+{
+    for (size_t i = 0; i < all_var->size; i++)
+    {
+        if (all_var->arr[i].num == var_num) return all_var->arr[i].name;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // (tokens->current_ind < tokens->size) - it is very sad. We can do operation '\n' like '$'. 
 // And everywhere (tokens->current_ind < tokens->size)?
 
@@ -63,7 +89,7 @@ Node* GetGraph(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func)
     Node* main_proc = create_node_like_token(tokens->array[tokens->current_ind]);
     tokens->current_ind++;
 
-    Node* val = GetChain(tokens, all_var);
+    Node* val = GetChain(tokens, all_var, all_func);
 
 
     check_symb_error(DOLL, tokens);
@@ -196,12 +222,14 @@ Node* Get_Created_Func(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_f
     tokens->current_ind++;
     // printf("{\n");
 
-    Node* body = GetChain(tokens, all_var);
+    Node* body = GetChain(tokens, all_var, all_func);
 
     check_symb_error(F_CLOSE_SKOB, tokens);
     tokens->current_ind++;
     // printf("}\n");
 
+
+    // Тут нет проверки того, что эта функция уже не была создана!
 
     op_tok->value.func_num = insert_new_func(op_tok, all_var, all_func, &num_args);
     // printf("OK func_num\n");
@@ -267,7 +295,7 @@ static int insert_new_func(Node* node, VariableArr* all_var, FunctionsArr* all_f
         if (all_var->arr[i].num == node->value.var_num) 
         { 
             all_func->arr[all_func->size - 1].name = all_var->arr[i].name;
-            all_var->arr[i].num = -1; // Что тут делать? По сути я не убираю имя функции из списка переменных
+            // all_var->arr[i].num = -1; // Что тут делать? По сути я не убираю имя функции из списка переменных  ЭТО ДЕЛАТЬ НЕЛЬЗЯ, ИНАЧЕ СЛОМАЕТСЯ  heav_op (где ищем номер)
             break; 
         }
     }
@@ -481,7 +509,7 @@ static int insert_new_func(Node* node, VariableArr* all_var, FunctionsArr* all_f
 
 
 
-Node* GetIf(Tokens* tokens, VariableArr* all_var)
+Node* GetIf(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func)
 {
     assert(tokens);
     assert(all_var);
@@ -498,7 +526,7 @@ Node* GetIf(Tokens* tokens, VariableArr* all_var)
 
 
     // Node* val_condition = GetE_Addition(tokens, all_var);
-    Node* val_condition = GetCompare(tokens, all_var);
+    Node* val_condition = GetCompare(tokens, all_var, all_func);
 
 
 
@@ -509,7 +537,7 @@ Node* GetIf(Tokens* tokens, VariableArr* all_var)
     tokens->current_ind++;
 
 
-    Node* val_to_do = GetChain(tokens, all_var);
+    Node* val_to_do = GetChain(tokens, all_var, all_func);
 
 
     check_symb_error(F_CLOSE_SKOB, tokens);
@@ -525,7 +553,7 @@ Node* GetIf(Tokens* tokens, VariableArr* all_var)
 
 
 
-Node* GetWhile(Tokens* tokens, VariableArr* all_var)
+Node* GetWhile(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func)
 {
     assert(tokens);
     assert(all_var);
@@ -542,7 +570,7 @@ Node* GetWhile(Tokens* tokens, VariableArr* all_var)
 
 
     // Node* val_condition = GetE_Addition(tokens, all_var);
-    Node* val_condition = GetCompare(tokens, all_var);
+    Node* val_condition = GetCompare(tokens, all_var, all_func);
 
 
     check_symb_error(CLOSE_SKOB, tokens);
@@ -552,7 +580,7 @@ Node* GetWhile(Tokens* tokens, VariableArr* all_var)
     tokens->current_ind++;
 
 
-    Node* val_to_do = GetChain(tokens, all_var);
+    Node* val_to_do = GetChain(tokens, all_var, all_func);
 
 
     check_symb_error(F_CLOSE_SKOB, tokens);
@@ -571,7 +599,7 @@ Node* GetWhile(Tokens* tokens, VariableArr* all_var)
 
 
 
-Node* GetAssigm(Tokens* tokens, VariableArr* all_var)
+Node* GetAssigm(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func)
 {
     assert(tokens);
     assert(all_var);
@@ -586,7 +614,7 @@ Node* GetAssigm(Tokens* tokens, VariableArr* all_var)
     tokens->current_ind++;
 
 
-    Node* val = GetE_Addition(tokens, all_var);
+    Node* val = GetE_Addition(tokens, all_var, all_func);
 
     op_tok->left = val_var;
     op_tok->right = val;
@@ -597,7 +625,7 @@ Node* GetAssigm(Tokens* tokens, VariableArr* all_var)
 }
 
 
-Node* GetOp(Tokens* tokens, VariableArr* all_var)
+Node* GetOp(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func)
 {
     assert(tokens);
     assert(all_var);
@@ -607,15 +635,15 @@ Node* GetOp(Tokens* tokens, VariableArr* all_var)
 
     if (CHECK(IF))
     {
-        val = GetIf(tokens, all_var);
+        val = GetIf(tokens, all_var, all_func);
     }
     else if (CHECK(WHILE))
     {
-        val = GetWhile(tokens, all_var);
+        val = GetWhile(tokens, all_var, all_func);
     }
     else
     {
-        val = GetAssigm(tokens, all_var);
+        val = GetAssigm(tokens, all_var, all_func);
     }
 
     check_symb_error(SPLIT, tokens);
@@ -630,20 +658,20 @@ Node* GetOp(Tokens* tokens, VariableArr* all_var)
 }
 
 
-Node* GetCompare(Tokens* tokens, VariableArr* all_var)
+Node* GetCompare(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func)
 {
     assert(tokens);
     assert(all_var);
 
 
-    Node* val = GetE_Addition(tokens, all_var);
+    Node* val = GetE_Addition(tokens, all_var, all_func);
 
     if (!(CHECK(EQUAL) || CHECK(MORE) || CHECK(LESS) || CHECK(GEQ) || CHECK(LEQ))) printf("ERROR SYNTAX. Want compare symbol\n"); //|| CHECK(MORE) || CHECK(LESS)
 
     Node* op_tok = create_node_like_token(tokens->array[tokens->current_ind]);
     tokens->current_ind++;
 
-    Node* val2 = GetE_Addition(tokens, all_var);
+    Node* val2 = GetE_Addition(tokens, all_var, all_func);
 
     op_tok->left  = val;
     op_tok->right = val2;
@@ -652,15 +680,15 @@ Node* GetCompare(Tokens* tokens, VariableArr* all_var)
 }
 
 
-Node* GetChain(Tokens* tokens, VariableArr* all_var)
+Node* GetChain(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func)
 {
-    Node* op_tok = GetOp(tokens, all_var);
+    Node* op_tok = GetOp(tokens, all_var, all_func);
     Node* op_now = op_tok;
 
     // ???????????????????????????????????????????????? (is this okey?)
     while(CHECK(IF) || CHECK(WHILE) || ((tokens->current_ind < tokens->size) && (tokens->array[tokens->current_ind]->type == VARIABLE)))
     {
-        Node* val = GetOp(tokens, all_var);
+        Node* val = GetOp(tokens, all_var, all_func);
 
         op_now->right = val;
         op_now = val;
@@ -688,13 +716,13 @@ Node* GetNumber(Tokens* tokens)
 }
 
 
-Node* GetE_Addition(Tokens* tokens, VariableArr* all_var) 
+Node* GetE_Addition(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func) 
 {
     assert(tokens);
     assert(all_var);
 
 
-    Node* val = GetT_Multiplication(tokens, all_var);
+    Node* val = GetT_Multiplication(tokens, all_var, all_func);
 
     // while ((tokens->current_ind < tokens->size) 
     //         &&
@@ -706,7 +734,7 @@ Node* GetE_Addition(Tokens* tokens, VariableArr* all_var)
         Node* op_tok = create_node_like_token(tokens->array[tokens->current_ind]);
         tokens->current_ind++;
 
-        Node* val2 = GetT_Multiplication(tokens, all_var);
+        Node* val2 = GetT_Multiplication(tokens, all_var, all_func);
 
         op_tok->left = val;
         op_tok->right = val2;
@@ -717,13 +745,13 @@ Node* GetE_Addition(Tokens* tokens, VariableArr* all_var)
 }
 
 
-Node* GetT_Multiplication(Tokens* tokens, VariableArr* all_var) 
+Node* GetT_Multiplication(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func) 
 {
     assert(tokens);
     assert(all_var);
 
 
-    Node* val = GetP_Pow(tokens, all_var);
+    Node* val = GetP_Pow(tokens, all_var, all_func);
 
     // while ((tokens->current_ind < tokens->size)                        
     //         &&
@@ -735,7 +763,7 @@ Node* GetT_Multiplication(Tokens* tokens, VariableArr* all_var)
         Node* op_tok = create_node_like_token(tokens->array[tokens->current_ind]);
         tokens->current_ind++;
 
-        Node* val2 = GetP_Pow(tokens, all_var);
+        Node* val2 = GetP_Pow(tokens, all_var, all_func);
 
         op_tok->left = val;
         op_tok->right = val2;
@@ -749,13 +777,13 @@ Node* GetT_Multiplication(Tokens* tokens, VariableArr* all_var)
 
 
 
-Node* GetP_Pow(Tokens* tokens, VariableArr* all_var)
+Node* GetP_Pow(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func)
 {
     assert(tokens);
     assert(all_var); 
 
 
-    Node* val = Get_Heaviest_Oper(tokens, all_var);
+    Node* val = Get_Heaviest_Oper(tokens, all_var, all_func);
 
     // while ((tokens->current_ind < tokens->size)                       
     //         &&
@@ -766,7 +794,7 @@ Node* GetP_Pow(Tokens* tokens, VariableArr* all_var)
         Node* op_tok = create_node_like_token(tokens->array[tokens->current_ind]);
         tokens->current_ind++;
 
-        Node* val2 = Get_Heaviest_Oper(tokens, all_var);
+        Node* val2 = Get_Heaviest_Oper(tokens, all_var, all_func);
         
         
         op_tok->left = val;
@@ -780,7 +808,7 @@ Node* GetP_Pow(Tokens* tokens, VariableArr* all_var)
 
 
 
-Node* Get_Heaviest_Oper(Tokens* tokens, VariableArr* all_var)
+Node* Get_Heaviest_Oper(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func)
 {
     assert(tokens);
     assert(all_var); 
@@ -792,7 +820,7 @@ Node* Get_Heaviest_Oper(Tokens* tokens, VariableArr* all_var)
         if (CHECK(OPEN_SKOB)) 
         {
             tokens->current_ind++;
-            Node* val = GetE_Addition(tokens, all_var);
+            Node* val = GetE_Addition(tokens, all_var, all_func);
             
             // if ((tokens->array[tokens->current_ind]->type == OPERATION) && 
             //     (tokens->array[tokens->current_ind]->value.op_num != CLOSE_SKOB))
@@ -807,18 +835,34 @@ Node* Get_Heaviest_Oper(Tokens* tokens, VariableArr* all_var)
         }
         else
         {
-            Node* val = GetF_Function_one_arg(tokens, all_var);
+            Node* val = GetF_Function_one_arg(tokens, all_var, all_func);
             if (val != NULL) return val;
         }
     }
+
+
+    // ПРОВЕРЬ ЭТО!!!!!!!!!!!
     
-    else if (tokens->array[tokens->current_ind]->type == VARIABLE) return GetVariable(tokens, all_var);
-    else                                                           return GetNumber(tokens);
+    else if (tokens->array[tokens->current_ind]->type == VARIABLE)
+    {
+        // проверить есть ли это имя в функциях
+        for (size_t i = 0; i < all_func->size; i++)
+        {
+            if (strcmp(all_func->arr[i].name, find_name_var(tokens->array[tokens->current_ind]->value.var_num, all_var)) == 0) 
+            {
+                return Get_My_Func(tokens, all_var, all_func, all_func->arr[i]);
+            }
+        }
+        
+        return GetVariable(tokens, all_var); // тут изменится! (проверить имя на функцию!!!!!)
+    }
+
+    else return GetNumber(tokens);
     return NULL;
 }
 
 
-Node* GetF_Function_one_arg(Tokens* tokens, VariableArr* all_var) 
+Node* GetF_Function_one_arg(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func) 
 {
 
     // Так как тут будет прием еще собственных (написанных) функций, то надо будет сделать функцию, которая по кол-ву аргументов делает эту "запись" (в дерево). 
@@ -842,7 +886,7 @@ Node* GetF_Function_one_arg(Tokens* tokens, VariableArr* all_var)
             printf("ERROR SYNTAX. Want '('\n");
         tokens->current_ind++;
 
-        Node* val = GetE_Addition(tokens, all_var); 
+        Node* val = GetE_Addition(tokens, all_var, all_func); 
 
         // if ((tokens->array[tokens->current_ind]->type == OPERATION) && 
         //     (tokens->array[tokens->current_ind]->value.op_num != CLOSE_SKOB)) 
@@ -880,6 +924,77 @@ Node* GetVariable(Tokens* tokens, VariableArr* all_var)
 
 
 
+Node* Get_My_Func(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func, Function this_func)
+{
+    assert(tokens);
+    assert(all_var);
+    assert(all_func);
+
+
+    Node* func_name = GetVariable(tokens, all_var); // Надо ли новый тип ячейки???????????????????????????????????
+    // кажется, надо новый тип
+    func_name->type           = CALL_FUNC;
+    func_name->value.func_num = this_func.num;
+
+
+    // Function this_func = {};
+    
+    // // Нашли функцию в списке
+    // for (size_t i = 0; i < all_func->size; i++)
+    // {
+    //     if (strcmp(all_func->arr[i].name, find_name_var(func_name->value.var_num, all_var)) == 0) 
+    //     {
+    //         this_func = all_func->arr[i];
+    //         break; 
+    //     }
+    // }
+
+
+    check_symb_error(OPEN_SKOB, tokens);
+    tokens->current_ind++;
+
+    Node* val = NULL;
+
+    if (this_func.num_args != 0)
+    {
+        // val = GetVariable(tokens, all_var);
+        val = GetE_Addition(tokens, all_var, all_func);
+
+        for (int i = 0; i < this_func.num_args - 1; i++)
+        {
+            check_symb_error(COMMA, tokens);
+            Node* op_node = create_node_like_token(tokens->array[tokens->current_ind]);
+            tokens->current_ind++;
+
+            // Node* val2 = GetVariable(tokens, all_var);
+            Node* val2 = GetE_Addition(tokens, all_var, all_func);
+
+            op_node->left  = val;
+            op_node->right = val2;
+
+            val = op_node;
+        }
+    }
+
+    check_symb_error(CLOSE_SKOB, tokens);
+    tokens->current_ind++;
+
+    func_name->left = val;
+
+    return func_name;
+
+
+} 
+
+
+
+// static char* find_name_var(int var_num, VariableArr* all_var)
+// {
+//     for (size_t i = 0; i < all_var->size; i++)
+//     {
+//         if (all_var->arr[i].num == var_num) return all_var->arr[i].name;
+//     }
+// }
 
 
 

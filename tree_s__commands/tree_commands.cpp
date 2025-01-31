@@ -103,6 +103,12 @@ TypeNode solve_subtree(Node* current_node, int* diference)
         }
     }
 
+    else if (current_node->type == CREATED_FUNC || current_node->type == CALL_FUNC)
+    {
+        solve_subtree(current_node->left,  diference);
+        solve_subtree(current_node->right, diference);
+    }
+
     return current_node->type;
 }
 
@@ -260,7 +266,7 @@ static void fprint_node(FILE* file, Node* node, VariableArr* all_var, FunctionsA
         break;
     }
     
-    case CREATED_FUNC:
+    case CREATED_FUNC: case CALL_FUNC:
     {
         for (int i = 0; i < all_func->size; i++) 
         {

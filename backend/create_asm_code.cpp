@@ -20,6 +20,8 @@ void tree_to_asm(FILE* file_asm_code, Node* node, VariableArr* all_var, int* fla
     if      (node->type == NUMBER)   { printf("NUMBER\n"); fprintf(file_asm_code, "PUSH %lg ", node->value.num); }
     else if (node->type == VARIABLE) { printf("VARIABLE\n"); fprintf(file_asm_code, "PUSH [%d] ", node->value.var_num); }
 
+    // else if (node->type == CREATED_FUNC) запускаем функцию для объявления с правильным номером функции
+
     // запуск нужной функции
     else
     {

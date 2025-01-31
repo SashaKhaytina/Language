@@ -130,7 +130,7 @@ void print_node(Node* node, VariableArr* all_var, FunctionsArr* all_func)
         break;
     }
 
-    case CREATED_FUNC:
+    case CREATED_FUNC: case CALL_FUNC:
     {
         for (int i = 0; i < all_func->size; i++) 
         {

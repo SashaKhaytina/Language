@@ -4,21 +4,7 @@ func funcThree (a, b, c){a = 2;};
 
 MAIN
 
-x = 1;
-y = 4 + x+0;
+x = 10 + 1 *(funcOne(1 + 0, y, 5+6) + 9);
 
-if (y > 0)
-{
-    if (0 >= 0){x=x/2 +2/x *y -y;};
-    y = y - 1;
-    while (x<=y)
-    {
-        if (0 < 4){x=0;};
-        x =x - 1;
-    };
-};
-while(3 == 3)
-{
-    d = 0;
-};
+if (x == 0){x = 1;};
 $
