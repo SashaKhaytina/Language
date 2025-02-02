@@ -224,6 +224,9 @@ Node* Get_Created_Func(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_f
 
     Node* body = GetChain(tokens, all_var, all_func);
 
+    Node* ret  = Get_Return(tokens, all_var, all_func);
+    ret->left = body;
+
     check_symb_error(F_CLOSE_SKOB, tokens);
     tokens->current_ind++;
     // printf("}\n");
@@ -235,12 +238,31 @@ Node* Get_Created_Func(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_f
     // printf("OK func_num\n");
     op_tok->left  = args;
     // printf("OK left\n");
-    op_tok->right = body;
+    op_tok->right = ret;
     // printf("OK right\n");
 
 
     return op_tok;
 
+
+}
+
+
+Node* Get_Return(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func)
+{
+    check_symb_error(RETURN, tokens);
+    
+    Node* op_tok = create_node_like_token(tokens->array[tokens->current_ind]);
+    tokens->current_ind++;
+
+    Node* val = GetE_Addition(tokens, all_var, all_func);
+
+    check_symb_error(SPLIT, tokens);
+    tokens->current_ind++;
+
+    op_tok->right = val;
+
+    return op_tok;
 
 }
 
@@ -255,7 +277,7 @@ Node* Get_Args(Tokens* tokens, VariableArr* all_var, int* num_args)
     Node* arg_now = GetVariable(tokens, all_var);
     (*num_args)++;
 
-    while (CHECK(COMMA))
+    while (CHECK(POINTCOMMA))
     {
         Node* now_node = create_node_like_token(tokens->array[tokens->current_ind]);
         tokens->current_ind++;

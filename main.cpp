@@ -58,12 +58,15 @@ int main()
 
     // TO ASM!!!!!!!!
 
-    // FILE* file_asm_code = fopen(FILE_ASM_CODE, "w");
+    FILE* file_asm_code = fopen(FILE_ASM_CODE, "w");
 
-    // int flag = 0;
+    int flag = 0;
+    bool is_in_func = false;
     
-    // tree_to_asm(file_asm_code, tree.root, &all_var, &flag);
+    tree_to_asm(file_asm_code, tree.root, &all_var, &all_func, &flag, &is_in_func);
     // fprintf(file_asm_code, "\nHLT\n");
+
+    fclose(file_asm_code);
 
 
 

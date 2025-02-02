@@ -16,6 +16,7 @@ Node* GetCompare           (Tokens* tokens, VariableArr* all_var, FunctionsArr* 
 Node* Get_Chain_Func       (Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func);
 Node* Get_Created_Func     (Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func);
 Node* Get_Args             (Tokens* tokens, VariableArr* all_var, int* num_args);
+Node* Get_Return           (Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func);
 
 
 
@@ -29,6 +30,8 @@ Node* Get_Heaviest_Oper    (Tokens* tokens, VariableArr* all_var, FunctionsArr* 
 Node* GetF_Function_one_arg(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func);
 Node* Get_My_Func          (Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func, Function this_func);
 Node* GetVariable          (Tokens* tokens, VariableArr* all_var);
+
+
 
 
 

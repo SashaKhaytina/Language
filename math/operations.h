@@ -72,10 +72,13 @@ const Operation op_arr[] = {
    
                                 {SPLIT,        ";",        NULL,          NULL},
                                 {COMMA,        ",",        NULL,          NULL},
+                                {POINTCOMMA,   ".,",       NULL,          NULL},
 
 
-                                {END_PROG,     "ENDPROG", NULL,          NULL},
-                                {MAIN,         "MAIN",     NULL,          NULL},
+                                {END_PROG,     "ENDPROG",  NULL,          NULL},
+                                {MAIN,         "MAIN",     NULL,         NULL},
+                                {RETURN,       "return",   NULL,         NULL},
+
 
                                 {ERROR,        "ERROR",    NULL,         NULL}
                             };

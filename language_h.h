@@ -65,10 +65,12 @@ enum AllOperations
 
     SPLIT, 
     COMMA,
+    POINTCOMMA,
 
 
     END_PROG,
     MAIN,
+    RETURN,
 
     ERROR
 };

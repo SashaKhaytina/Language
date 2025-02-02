@@ -1,12 +1,12 @@
-func funcOne (a, b, c){a = 1;};
-func funcTwo (a, b, c){a = 2;};
-func funcThree (a, b, c){a = 2;};
+func funcOne (b){a = b + 23; return a;};
+
 
 MAIN
 
+input x;
 input y;
 
-x = 10 + 1 *(funcOne(1 + 0, y, 5+6) + 9);
+x = funcOne(x) + y;
 
 if (x == 0){x = 1;};
 

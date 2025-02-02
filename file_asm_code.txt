@@ -1,2 +1,43 @@
+PUSH 0 POP REX
+
+IN 
+POP [4 + REX]
+
+
+IN 
+POP [5 + REX]
+
+PUSH [4 + REX] CALL funcOne PUSH [5 + REX] ADD 
+POP [4 + REX]
+
+PUSH [4 + REX] PUSH 0 JNE IF0
+PUSH 1 POP [4 + REX]
+
+
+IF0:
+
+PUSH [4 + REX] OUT 
+
 
 HLT
+
+
+funcOne:
+
+PUSH REX 
+PUSH REX PUSH 100 ADD POP REX
+
+POP RCX POP RDX
+POP [2 + REX]
+PUSH [2 + REX] PUSH 23 ADD 
+POP [3 + REX]
+
+PUSH [3 + REX] 
+PUSH RCX POP REX
+
+PUSH RDX
+
+RET
+
+
+
