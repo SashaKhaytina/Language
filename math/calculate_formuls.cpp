@@ -114,3 +114,15 @@ Elem_t calculate_ln(Node* node1, Node* node2)
     return val;
 }
 
+
+Elem_t calculate_sqrt(Node* node1, Node* node2)
+{
+    assert(!node1); // NULL
+    assert(node2);
+
+    Elem_t val = sqrt((double) node2->value.num);
+
+    free_tree(node2);
+
+    return val;
+}

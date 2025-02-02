@@ -28,8 +28,8 @@ void asm_code_sub(FILE* file_asm_code, Node* node, VariableArr* all_var, Functio
 {
     printf("SUB\n");
 
-    tree_to_asm(file_asm_code, node->left,  all_var, all_func, flag, is_in_func);
     tree_to_asm(file_asm_code, node->right, all_var, all_func, flag, is_in_func);
+    tree_to_asm(file_asm_code, node->left , all_var, all_func, flag, is_in_func);
 
     fprintf(file_asm_code, "SUB \n"); // PUSH был ранее
 
@@ -149,6 +149,18 @@ void asm_code_equal(FILE* file_asm_code, Node* node, VariableArr* all_var, Funct
 }
 
 
+void asm_code_nequal(FILE* file_asm_code, Node* node, VariableArr* all_var, FunctionsArr* all_func, int* flag, bool* is_in_func)
+{
+    printf("NEQUAL\n");
+
+    tree_to_asm(file_asm_code, node->left , all_var, all_func, flag, is_in_func);
+    tree_to_asm(file_asm_code, node->right, all_var, all_func, flag, is_in_func);
+
+    fprintf(file_asm_code, "JE ");
+
+}
+
+
 void asm_code_more(FILE* file_asm_code, Node* node, VariableArr* all_var, FunctionsArr* all_func, int* flag, bool* is_in_func)
 {
     printf("MORE\n");
@@ -234,9 +246,10 @@ void asm_code_func(FILE* file_asm_code, Node* node, VariableArr* all_var, Functi
 
 
     if (node->left->type == OPERATION) tree_to_asm(file_asm_code, node->left, all_var, all_func, flag, is_in_func);
-    else fprintf(file_asm_code, "POP [%d + REX]", node->left->value.var_num);
+    else fprintf(file_asm_code, "POP [%d + REX] ", node->left->value.var_num);
+
+    fprintf(file_asm_code, "\nPUSH RDX PUSH RCX\n");
     
-    fprintf(file_asm_code, "\n");
     
     tree_to_asm(file_asm_code, node->right, all_var, all_func, flag, is_in_func);
 
@@ -303,9 +316,15 @@ void asm_code_return(FILE* file_asm_code, Node* node, VariableArr* all_var, Func
 
     tree_to_asm(file_asm_code, node->right, all_var, all_func, flag, is_in_func);
 
-    fprintf(file_asm_code, "\nPUSH RCX POP REX\n"); // ВЕРНУЛИ ЗНАЧЕНИЕ REX
+    fprintf(file_asm_code, "\nPOP RAX\n"); // Возвращаемое значение
 
-    fprintf(file_asm_code, "\nPUSH RDX\n"); // ЗНАЧЕНИЕ ПРЫЖКА
+    fprintf(file_asm_code, "\nPOP REX\n"); // ВЕРНУЛИ ЗНАЧЕНИЕ REX
+
+    fprintf(file_asm_code, "\nPOP RBX\n");
+
+    fprintf(file_asm_code, "\nPUSH RAX\n");
+    
+    fprintf(file_asm_code, "\nPUSH RBX\n"); // ЗНАЧЕНИЕ ПРЫЖКА
 
     fprintf(file_asm_code, "\nRET\n\n\n");
 

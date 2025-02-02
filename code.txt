@@ -1,4 +1,5 @@
 func funcOne (b){a = b + 23; return a;};
+func FuncTwo (a){b = a + 2;  return b;};
 
 
 MAIN

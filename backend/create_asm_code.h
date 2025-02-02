@@ -33,6 +33,7 @@ const Operation_to_asm op_to_asm_arr[] = {
                                 {FUNC,         "func",     asm_code_func},
    
                                 {EQUAL,         "==",      asm_code_equal},
+                                {NEQUAL,        "!=",      asm_code_nequal},
                                 {MORE,          ">",       asm_code_more},
                                 {LESS,          "<",       asm_code_less},
                                 {GEQ,           ">=",      asm_code_geq},

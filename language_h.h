@@ -10,7 +10,7 @@ typedef int    ForDump;
 
 
 
-const char* const FILE_CODE             = "code.txt";
+const char* const FILE_CODE             = "code_factorial.txt";
 const char* const FILE_TREE             = "code_tree.txt";
 const char* const FILE_ASM_CODE         = "file_asm_code.txt";
 
@@ -42,6 +42,7 @@ enum AllOperations
     COS,
     POW,
     LN,
+    SQRT,
 
     INPUT,
     OUTPUT,
@@ -53,6 +54,7 @@ enum AllOperations
     FUNC,
 
     EQUAL,
+    NEQUAL,
     MORE,
     LESS, 
     GEQ,

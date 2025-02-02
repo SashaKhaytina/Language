@@ -42,10 +42,11 @@ static void check_symb_error(AllOperations op, Tokens* tokens)
         {
             if (op_arr[i].num == op)
             {
-                printf("%s'\n", op_arr[i].name);
+                printf("%s' ", op_arr[i].name);
                 break; 
             }
         }
+        printf("// %d - token\n", tokens->current_ind);
     }
 }
 
@@ -214,6 +215,9 @@ Node* Get_Created_Func(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_f
         args = Get_Args(tokens, all_var, &num_args);
     }
 
+    op_tok->value.func_num = insert_new_func(op_tok, all_var, all_func, &num_args);
+
+
     check_symb_error(CLOSE_SKOB, tokens);
     tokens->current_ind++;
     // printf(")\n");
@@ -234,7 +238,7 @@ Node* Get_Created_Func(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_f
 
     // Тут нет проверки того, что эта функция уже не была создана!
 
-    op_tok->value.func_num = insert_new_func(op_tok, all_var, all_func, &num_args);
+    // op_tok->value.func_num = insert_new_func(op_tok, all_var, all_func, &num_args);
     // printf("OK func_num\n");
     op_tok->left  = args;
     // printf("OK left\n");
@@ -718,7 +722,7 @@ Node* GetCompare(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func)
 
     Node* val = GetE_Addition(tokens, all_var, all_func);
 
-    if (!(CHECK(EQUAL) || CHECK(MORE) || CHECK(LESS) || CHECK(GEQ) || CHECK(LEQ))) printf("ERROR SYNTAX. Want compare symbol\n"); //|| CHECK(MORE) || CHECK(LESS)
+    if (!(CHECK(EQUAL) || CHECK(NEQUAL) || CHECK(MORE) || CHECK(LESS) || CHECK(GEQ) || CHECK(LEQ))) printf("ERROR SYNTAX. Want compare symbol\n"); //|| CHECK(MORE) || CHECK(LESS)
 
     Node* op_tok = create_node_like_token(tokens->array[tokens->current_ind]);
     tokens->current_ind++;
@@ -926,7 +930,7 @@ Node* GetF_Function_one_arg(Tokens* tokens, VariableArr* all_var, FunctionsArr* 
     // if ((tokens->array[tokens->current_ind]->value.op_num == SIN) || 
     //     (tokens->array[tokens->current_ind]->value.op_num == COS) || 
     //     (tokens->array[tokens->current_ind]->value.op_num == LN))
-    if (CHECK(SIN) || CHECK(COS) || CHECK(LN))
+    if (CHECK(SIN) || CHECK(COS) || CHECK(LN) || CHECK(SQRT))
     {
 
         Node* op_tok = create_node_like_token(tokens->array[tokens->current_ind]);

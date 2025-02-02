@@ -1,0 +1,28 @@
+
+MAIN
+
+first = 0;
+second = 1;
+
+input x;
+counter = 1;
+
+if (x == 0){ output x; };
+if (x == 1){ output x; };
+
+if (x != 0){if (x != 1)
+{
+    while (counter < x)
+    {
+        tmp = second;
+        second = second + first;
+        first = tmp;
+
+        counter = counter + 1;
+    };
+
+    output second;
+
+};};
+
+ENDPROG
