@@ -52,13 +52,21 @@ void asm_code_mul(FILE* file_asm_code, Node* node, VariableArr* all_var, Functio
 
 void asm_code_div(FILE* file_asm_code, Node* node, VariableArr* all_var, FunctionsArr* all_func, int* flag, bool* is_in_func)
 {
-    tree_to_asm(file_asm_code, node->left,  all_var, all_func, flag, is_in_func);
     tree_to_asm(file_asm_code, node->right, all_var, all_func, flag, is_in_func);
+    tree_to_asm(file_asm_code, node->left,  all_var, all_func, flag, is_in_func);
 
     fprintf(file_asm_code, "DIV \n"); // PUSH был ранее
 
     // if      (node->right->type == NUMBER)   fprintf(file_asm_code, "PUSH %lg ", node->left->value.num);
     // else if (node->right->type == VARIABLE) fprintf(file_asm_code, "PUSH [%lg] ", node->left->value.var_num);
+}
+
+
+void asm_code_sqrt(FILE* file_asm_code, Node* node, VariableArr* all_var, FunctionsArr* all_func, int* flag, bool* is_in_func)
+{
+    tree_to_asm(file_asm_code, node->right, all_var, all_func, flag, is_in_func);
+
+    fprintf(file_asm_code, "SQRT ");
 }
 
 

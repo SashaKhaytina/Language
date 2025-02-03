@@ -10,7 +10,7 @@ typedef int    ForDump;
 
 
 
-const char* const FILE_CODE             = "code_factorial.txt";
+const char* const FILE_CODE             = "code_square_solver.txt";
 const char* const FILE_TREE             = "code_tree.txt";
 const char* const FILE_ASM_CODE         = "file_asm_code.txt";
 

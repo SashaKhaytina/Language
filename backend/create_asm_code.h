@@ -22,6 +22,8 @@ const Operation_to_asm op_to_asm_arr[] = {
                                 {COS,          "cos",      NULL}, // ?
                                 {POW,          "^",        NULL}, // ? :|
                                 {LN ,          "ln",       NULL}, // ?
+                                {SQRT ,        "sqrt",     asm_code_sqrt},
+
 
                                 {INPUT,        "input",    asm_code_input},
                                 {OUTPUT,       "output",   asm_code_output},
