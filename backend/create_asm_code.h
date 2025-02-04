@@ -3,7 +3,7 @@
 
 #include "../language_h.h"
 
-// TO DO ADEKVATNIE NAME!!!!!
+
 struct Operation_to_asm
 {
     AllOperations num;
@@ -18,10 +18,10 @@ const Operation_to_asm op_to_asm_arr[] = {
                                 {SUB,          "-",        asm_code_sub},
                                 {MUL,          "*",        asm_code_mul},
                                 {DIV,          "/",        asm_code_div},
-                                {SIN,          "sin",      NULL}, // ?
-                                {COS,          "cos",      NULL}, // ?
-                                {POW,          "^",        NULL}, // ? :|
-                                {LN ,          "ln",       NULL}, // ?
+                                {SIN,          "sin",      NULL},
+                                {COS,          "cos",      NULL},
+                                {POW,          "^",        NULL},
+                                {LN ,          "ln",       NULL},
                                 {SQRT ,        "sqrt",     asm_code_sqrt},
 
 
@@ -42,10 +42,10 @@ const Operation_to_asm op_to_asm_arr[] = {
                                 {LEQ,           "<=",      asm_code_leq},
    
    
-                                {OPEN_SKOB,     "(",       NULL}, // их нет в дереве!
-                                {CLOSE_SKOB,    ")",       NULL}, // их нет в дереве!
-                                {F_OPEN_SKOB,   "{",       NULL}, // их нет в дереве!
-                                {F_CLOSE_SKOB,  "}",       NULL}, // их нет в дереве!
+                                {OPEN_SKOB,     "(",       NULL},
+                                {CLOSE_SKOB,    ")",       NULL},
+                                {F_OPEN_SKOB,   "{",       NULL},
+                                {F_CLOSE_SKOB,  "}",       NULL},
 
 
                                 {SPLIT,         ";",       asm_code_split},
@@ -53,13 +53,11 @@ const Operation_to_asm op_to_asm_arr[] = {
                                 {POINTCOMMA,    ".,",      asm_code_pointcomma},
 
 
-                                // {END_PROG,      "ENDPROG", asm_code_endprog},
                                 {MAIN,          "MAIN",    asm_code_main},
                                 {RETURN,       "return",   asm_code_return},
                             };
 
 const int LEN_STRUCT_OP_TO_ASM_ARR = (int) (sizeof(op_to_asm_arr) / sizeof(Operation_to_asm));
-
 
 
 

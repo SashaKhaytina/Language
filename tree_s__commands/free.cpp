@@ -14,7 +14,7 @@ void free_tree(Node* node)
 }
 
 
-void free_val(VariableArr* all_var) // массив функций "почиститься также тут"
+void free_val(VariableArr* all_var)
 {
     for (size_t i = 0; i < all_var->size; i++)
     {
@@ -38,14 +38,3 @@ void free_tokens(Tokens* tokens)
 }
 
 
-// void free_needless_tokens(Tokens* tokens)
-// {
-//     for (size_t i = 0; i < tokens->size; i++)
-//     {
-//         // if (tokens->array[i]->type == OPERATION && (tokens->array[i]->value.op_num == OPEN_SKOB || tokens->array[i]->value.op_num == CLOSE_SKOB))
-//         // {
-//         //     free((tokens->array[i])); tokens->array[i] = NULL;
-//         // }
-//         free((tokens->array[i])); tokens->array[i] = NULL;
-//     }
-// }

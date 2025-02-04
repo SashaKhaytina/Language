@@ -29,7 +29,6 @@ void asm_code_func      (FILE* file_asm_code, Node* node, VariableArr* all_var, 
 void asm_code_comma     (FILE* file_asm_code, Node* node, VariableArr* all_var, FunctionsArr* all_func, int* flag, bool* is_in_func);
 void asm_code_pointcomma(FILE* file_asm_code, Node* node, VariableArr* all_var, FunctionsArr* all_func, int* flag, bool* is_in_func);
 
-// void asm_code_endprog   (FILE* file_asm_code, Node* node, VariableArr* all_var, FunctionsArr* all_func, int* flag, bool* is_in_func);
 void asm_code_main      (FILE* file_asm_code, Node* node, VariableArr* all_var, FunctionsArr* all_func, int* flag, bool* is_in_func);
 void asm_code_return(FILE* file_asm_code, Node* node, VariableArr* all_var, FunctionsArr* all_func, int* flag, bool* is_in_func);
 

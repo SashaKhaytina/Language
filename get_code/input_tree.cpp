@@ -40,16 +40,9 @@ void get_tree(FILE* file, Tree* tree, VariableArr* all_var, FunctionsArr* all_fu
 
     get_token(tokens, arr_file_tree, all_var);
 
-    print_token(tokens, all_var);
-    printf(" - TOKENS\n");
+    // print_token(tokens, all_var);
 
     tree->root = GetGraph(tokens, all_var, all_func);
 
     free_tokens(tokens);
-    // tree->root = Get_Created_Func(tokens, all_var, all_func);
-
-    // tree->root = GetAssigm(tokens, all_var);
-    // tree->root = GetIf(tokens, all_var);
-    // tree->root = GetOp(tokens, all_var);
-    // free_needless_tokens(tokens);
 }

@@ -13,7 +13,7 @@ Elem_t calculate_add(Node* node1, Node* node2)
 
     Elem_t val = node1->value.num + node2->value.num;
 
-    free_tree(node1); // this is num. What is better to use here (free or free_tree)? (free_tree better for debug maybe)
+    free_tree(node1); 
     free_tree(node2);
 
     return val;

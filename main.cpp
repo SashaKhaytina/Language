@@ -31,11 +31,11 @@ int main()
 
     get_tree(file, &tree, &all_var, &all_func, &tokens);
 
-    print_node(tree.root, &all_var, &all_func);
-    printf("\n");
+    // print_node(tree.root, &all_var, &all_func);
+    // printf("\n");
 
-    print_tree(tree.root, &all_var, &all_func);
-    printf("\n");
+    // print_tree(tree.root, &all_var, &all_func);
+    // printf("\n");
 
     dump(tree.root, &dumps_counter, &all_var, &all_func);
 
@@ -43,8 +43,8 @@ int main()
 
     solve(tree.root);
     dump(tree.root, &dumps_counter, &all_var, &all_func);
-    print_tree(tree.root, &all_var, &all_func);
-    printf("\n");
+    // print_tree(tree.root, &all_var, &all_func);
+    // printf("\n");
 
 
 

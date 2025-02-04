@@ -42,7 +42,7 @@ TypeNode solve_subtree (Node* current_node, int* diference);
 void     trivial_solver(Node* current_node, int* diference);
 
 
-void create_file_tree(Tree* tree, VariableArr* all_var, FunctionsArr* all_func);
+// void create_file_tree(Tree* tree, VariableArr* all_var, FunctionsArr* all_func);
 
 
 #endif

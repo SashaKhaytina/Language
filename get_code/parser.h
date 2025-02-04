@@ -20,7 +20,7 @@ Node* Get_Return           (Tokens* tokens, VariableArr* all_var, FunctionsArr* 
 
 
 
-Node* GetChain(Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func);
+Node* GetChain             (Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func);
 
 Node* GetNumber            (Tokens* tokens);
 Node* GetE_Addition        (Tokens* tokens, VariableArr* all_var, FunctionsArr* all_func);

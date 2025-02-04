@@ -115,38 +115,6 @@ TypeNode solve_subtree(Node* current_node, int* diference)
 
 
 
-// void create_file_tree(Tree* tree, VariableArr* all_var)
-// {
-//     FILE* file = fopen(FILE_TREE, "w");
-
-//     print_tree_in_file(file, tree->root, 0, all_var);
-
-//     fclose(file);
-// }
-
-
-// static void print_tree_in_file(FILE* file, Node* node, size_t deep, VariableArr* all_var)
-// {   
-//     char tabs[MAX_DEEP_TREE] = {};
-//     for (size_t i = 0; i < deep; i++) tabs[i] = '\t';
-    
-//     if (node == NULL) return;
-
-//     // if      (node->type == NUMBER)    fprintf(file, "%s{%lg\n", tabs, node->value.num);
-//     // else if (node->type == VARIABLE)  fprintf(file, "%s{%s\n", tabs, all_var->arr[node->value.var_num].name);
-//     // else if (node->type == OPERATION) fprintf(file, "%s{%lg\n", tabs, node->value.num);
-//     fprintf(file, "%s{", tabs);
-//     fprint_node(file, node, all_var);
-
-//     print_tree_in_file(file, node->left, deep + 1, all_var);
-//     print_tree_in_file(file, node->right, deep + 1, all_var);
-//     fprintf(file, "%s}\n", tabs);
-// }
-
-
-
-
-
 
 void trivial_solver(Node* current_node, int* diference)
 {
@@ -205,14 +173,14 @@ void solve(Node* current_node)
 
 // Написать нормально вывод в файл. 
 
-void create_file_tree(Tree* tree, VariableArr* all_var, FunctionsArr* all_func)
-{
-    FILE* file = fopen(FILE_TREE, "w");
+// void create_file_tree(Tree* tree, VariableArr* all_var, FunctionsArr* all_func)
+// {
+//     FILE* file = fopen(FILE_TREE, "w");
 
-    print_tree_in_file(file, tree->root, 0, all_var, all_func);
+//     print_tree_in_file(file, tree->root, 0, all_var, all_func);
 
-    fclose(file);
-}
+//     fclose(file);
+// }
 
 
 static void print_tree_in_file(FILE* file, Node* node, size_t deep, VariableArr* all_var, FunctionsArr* all_func)
@@ -222,9 +190,6 @@ static void print_tree_in_file(FILE* file, Node* node, size_t deep, VariableArr*
     
     if (node == NULL) return;
 
-    // if      (node->type == NUMBER)    fprintf(file, "%s{%lg\n", tabs, node->value.num);
-    // else if (node->type == VARIABLE)  fprintf(file, "%s{%s\n", tabs, all_var->arr[node->value.var_num].name);
-    // else if (node->type == OPERATION) fprintf(file, "%s{%lg\n", tabs, node->value.num);
     fprintf(file, "%s{", tabs);
     fprint_node(file, node, all_var, all_func);
     fprintf(file, "\n");

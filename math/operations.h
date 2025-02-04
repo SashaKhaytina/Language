@@ -3,11 +3,6 @@
 
 #include "../language_h.h"
 
-// struct Operation
-// {
-//     AllOperations num;
-//     char          name[10];
-// };
 
 struct Operation
 {
@@ -18,23 +13,6 @@ struct Operation
 };
 
 
-
-// const Operation op_arr[] = {
-//                                 {ADD,        "+"  },
-//                                 {SUB,        "-"  },
-//                                 {MUL,        "*"  },
-//                                 {DIV,        "/"  },
-//                                 {SIN,        "sin"},
-//                                 {COS,        "cos"},
-//                                 {POW,        "^"  },
-//                                 {LN ,        "ln" },
-
-//                                 {OPEN_SKOB,  "("  },
-//                                 {CLOSE_SKOB, ")"  }, 
-//                                 {ASSIGM,     "="  }
-
-//                                 // {DOLL,       "$",   NULL,     NULL,          NULL} 
-//                             };
 
 #include "calculate_formuls.h"
 #include "calculate_trivial.h"

@@ -11,8 +11,6 @@ struct Token
 {
     TypeNode type;
     Value    value;
-    // Node*    left;
-    // Node*    right;
 };
 
 struct Tokens
